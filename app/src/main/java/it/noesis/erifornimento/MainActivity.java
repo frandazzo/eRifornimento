@@ -1,5 +1,6 @@
 package it.noesis.erifornimento;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
@@ -13,9 +14,10 @@ import android.widget.LinearLayout;
 
 import it.noesis.erifornimento.tasks.AsyncTaskCallbackContext;
 import it.noesis.erifornimento.tasks.PingTask;
+import it.noesis.erifornimento.utils.CallbackContext;
 import it.noesis.erifornimento.utils.Constants;
 
-public class MainActivity extends AppCompatActivity implements ServerDialogFragment.CallbackContext, AsyncTaskCallbackContext<String> {
+public class MainActivity extends AppCompatActivity implements CallbackContext<String>, AsyncTaskCallbackContext<String> {
 
 
 
@@ -47,6 +49,10 @@ public class MainActivity extends AppCompatActivity implements ServerDialogFragm
             @Override
             public void onClick(View view) {
                 Log.i(MainActivity.class.getName(), "Click pulsante fattura");
+
+
+                Intent i = new Intent(MainActivity.this, FatturaActivity.class);
+                MainActivity.this.startActivity(i);
             }
         });
 
@@ -86,17 +92,6 @@ public class MainActivity extends AppCompatActivity implements ServerDialogFragm
         }
     }
 
-    @Override
-    public void onDialogDismiss(String serverUrl) {
-
-        if (TextUtils.isEmpty(serverUrl)){
-            CheckServerStatus();
-            return;
-        }
-
-
-        new PingTask(this).execute(new String[]{serverUrl});
-    }
 
     private void saveUrl(String serverUrl) {
         SharedPreferences prefs = getSharedPreferences(Constants.PREFERENCES, MODE_PRIVATE);
@@ -124,5 +119,16 @@ public class MainActivity extends AppCompatActivity implements ServerDialogFragm
         saveUrl(s);
         CheckServerStatus();
 
+    }
+
+    @Override
+    public void onDialogDismiss(String returnData, String dialogTag) {
+        if (TextUtils.isEmpty(returnData)){
+            CheckServerStatus();
+            return;
+        }
+
+
+        new PingTask(this).execute(new String[]{returnData});
     }
 }

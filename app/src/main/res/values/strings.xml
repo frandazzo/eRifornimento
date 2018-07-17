@@ -3,4 +3,13 @@
     <string name="splashString">eRifornimento</string>
     <string name="imposta_server">Imposta server</string>
     <string name="nuova_fattura">Nuova fattura</string>
+    <string name="fatture">Nuova fattura</string>
+    <string name="automobile">Dati automobile</string>
+    <string name="benzina">Benzina</string>
+    <string name="euro">0,00 Euro</string>
+    <string name="diesel">Diesel</string>
+    <string name="gpl">Gpl</string>
+    <string name="metano">Metano</string>
+    <string name="targa">Targa automobile</string>
+    <string name="notarga">Nessuna targa impostata</string>
 </resources>

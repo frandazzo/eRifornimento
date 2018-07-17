@@ -3,26 +3,24 @@ package it.noesis.erifornimento;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+import android.text.InputFilter;
+import android.text.InputType;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 import it.noesis.erifornimento.utils.CallbackContext;
 import it.noesis.erifornimento.utils.Constants;
 
-import static android.content.Context.MODE_PRIVATE;
-
-public class ServerDialogFragment extends DialogFragment {
+public class DoublePickerDialogFragment extends DialogFragment {
 
     private CallbackContext<String> mCallback;
-    private String serverUrl;
-
+    private String dialogType;
+    private Double value;
 
 
     @Override
@@ -41,16 +39,18 @@ public class ServerDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the Builder class for convenient dialog construction
-        serverUrl = getArguments().getString(Constants.PREFERENCES_SERVER);
+        dialogType = getArguments().getString(Constants.DIALOG_TYPE);
+        value = getArguments().getDouble(Constants.DIALOG_VALUE);
 
+        if (value == null)
+            value = 0d;
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        builder.setTitle("Server URL");
-        builder.setMessage("Inserisci l'url del server");
+        builder.setTitle(String.format("Importo %s", dialogType));
+        builder.setMessage("Inserisci l'importo");
 
         final EditText input = new EditText(getActivity());
-
 
         FrameLayout container = new FrameLayout(getActivity());
         FrameLayout.LayoutParams params = new  FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -62,25 +62,29 @@ public class ServerDialogFragment extends DialogFragment {
         input.setSelectAllOnFocus(true);
         input.selectAll();
         input.setSingleLine();
-
-        input.setText(serverUrl);
+        input.setInputType( InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        input.setText(value.toString());
+        input.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
         builder.setView(container);
 
 
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
+            public void onClick(DialogInterface dialog, int id) {
 
-                        mCallback.onDialogDismiss(input.getText().toString(), ServerDialogFragment.this.getTag());
+                mCallback.onDialogDismiss(input.getText().toString(), DoublePickerDialogFragment.this.getTag());
 
-                    }
-                })
+            }
+        })
                 .setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 
-                        mCallback.onDialogDismiss("", ServerDialogFragment.this.getTag());
+                        mCallback.onDialogDismiss("0", DoublePickerDialogFragment.this.getTag());
+
                     }
                 });
         // Create the AlertDialog object and return it
         return builder.create();
     }
 }
+
+
