@@ -12,4 +12,7 @@ public class Constants {
     public static final String DIALOG_METANO = "metano";
     public static final String DIALOG_TYPE = "type";
     public static final String DIALOG_VALUE = "value";
+    public static final String FRAGMENT_NODATA = "nodata";
+    public static final String DATA = "data";
+    public static final String ERROR = "error";
 }

@@ -15,11 +15,7 @@
 
 
 
-        <!--
-
-        intestazione gruppo di valori per l'auto
-
-        -->
+        <!--intestazione gruppo di valori per l'auto-->
         <android.support.v7.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,13 +24,6 @@
             android:textColor="@color/colorPrimary"
             android:textSize="18sp" />
         <!--targa-->
-        <!--<android.support.v7.widget.AppCompatEditText-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:hint="Targa automobile"-->
-            <!--android:padding="20dp"-->
-
-            <!--android:id="@+id/targa"/>-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -55,9 +44,6 @@
                 android:id="@+id/targa_value"/>
 
         </LinearLayout>
-
-
-
         <!--importo benzina-->
         <LinearLayout
             android:layout_width="match_parent"
@@ -82,7 +68,6 @@
 
         </LinearLayout>
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -103,7 +88,6 @@
                 android:id="@+id/diesel_value"/>
 
         </LinearLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -126,8 +110,6 @@
 
         </LinearLayout>
 
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -149,12 +131,26 @@
                 android:id="@+id/metano_value"/>
 
         </LinearLayout>
-
+        <!--separatore-->
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@android:color/darker_gray"/>
 
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:text="@string/azienda"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/fragment_place">
+
+        </FrameLayout>
 
     </LinearLayout>
 </ScrollView>

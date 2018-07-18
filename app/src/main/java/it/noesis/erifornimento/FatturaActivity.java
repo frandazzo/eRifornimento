@@ -1,5 +1,12 @@
 package it.noesis.erifornimento;
 
+import android.app.Activity;
+import android.app.FragmentManager;
+import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -7,12 +14,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import it.noesis.erifornimento.model.Fattura;
 import it.noesis.erifornimento.utils.CallbackContext;
 import it.noesis.erifornimento.utils.Constants;
 
-public class FatturaActivity extends AppCompatActivity implements CallbackContext<String>{
+public class FatturaActivity extends AppCompatActivity implements CallbackContext<String>, NodataFragment.OnFragmentInteractionListener {
 
     private LinearLayout benzina;
     private LinearLayout metano;
@@ -28,7 +36,6 @@ public class FatturaActivity extends AppCompatActivity implements CallbackContex
     private TextView targaValue;
 
     private Fattura fattura;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -184,6 +191,12 @@ public class FatturaActivity extends AppCompatActivity implements CallbackContex
             }
         });
 
+        //imposto il fragment iniziale
+        FragmentManager f =  getFragmentManager();
+        NodataFragment noData = new NodataFragment();
+
+        f.beginTransaction().add(R.id.fragment_place, noData).commit();
+
 
         populateData();
 
@@ -271,5 +284,10 @@ public class FatturaActivity extends AppCompatActivity implements CallbackContex
             targaValue.setText(returnData);
         else
             targaValue.setText("Nessuna targa impostata");
+    }
+
+    @Override
+    public void onFragmentInteraction(String data) {
+        Log.i(this.getClass().getName(), "on fragment interatcion log....");
     }
 }

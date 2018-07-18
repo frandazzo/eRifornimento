@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="it.noesis.erifornimento">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera2" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/erifornimento"
@@ -9,7 +13,7 @@
         android:roundIcon="@mipmap/erifornimento_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
         <activity
             android:name=".Splash"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
@@ -19,7 +23,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".FatturaActivity" android:label="@string/fatture"></activity>
+        <activity
+            android:name=".FatturaActivity"
+            android:label="@string/fatture" />
+        <activity android:name=".QrScannerActivity"></activity>
     </application>
 
 </manifest>
