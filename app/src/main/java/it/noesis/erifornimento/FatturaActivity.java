@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +38,8 @@ public class FatturaActivity extends AppCompatActivity implements CallbackContex
 
     private Fattura fattura;
 
+    private Button sendFattura;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +47,14 @@ public class FatturaActivity extends AppCompatActivity implements CallbackContex
 
         //inizializo l'istanza che conterrà i valori selezionati dall'utente
         fattura = initializeFatturaData(savedInstanceState);
+        sendFattura = ((Button) findViewById(R.id.sendfattura));
 
+        sendFattura.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i(FatturaActivity.this.getClass().getName(), "Clikc  pulsante fattura");
+            }
+        });
         //inizializzo tutti i componeneti dell'interfaccia
         initInterface();
     }

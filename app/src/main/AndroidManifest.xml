@@ -3,9 +3,30 @@
     package="it.noesis.erifornimento">
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <!-- <uses-permission android:name="android.permission.VIBRATE"/> -->
+    <!-- <uses-permission android:name="android.permission.FLASHLIGHT"/> -->
 
-    <uses-feature android:name="android.hardware.camera2" />
 
+    <!-- <uses-feature -->
+    <!-- android:name="android.hardware.camera" -->
+    <!-- android:required="false" /> -->
+    <!-- <uses-feature -->
+    <!-- android:name="android.hardware.camera.front" -->
+    <!-- android:required="false" /> -->
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+
+    <!-- <uses-feature -->
+    <!-- android:name="android.hardware.camera.flash" -->
+    <!-- android:required="false" /> -->
+    <!-- <uses-feature android:name="android.hardware.screen.landscape" /> -->
+    <!-- <uses-feature -->
+    <!-- android:name="android.hardware.wifi" -->
+    <!-- android:required="false" /> -->
+    <!-- <uses-feature -->
+    <!-- android:name="android.hardware.touchscreen" -->
+    <!-- android:required="false" /> -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/erifornimento"
@@ -26,7 +47,10 @@
         <activity
             android:name=".FatturaActivity"
             android:label="@string/fatture" />
-        <activity android:name=".QrScannerActivity"></activity>
+        <activity
+            android:name=".QrScannerActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".ClienteEditActivity"></activity>
     </application>
 
 </manifest>

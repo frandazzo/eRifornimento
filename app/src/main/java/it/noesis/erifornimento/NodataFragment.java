@@ -34,7 +34,7 @@ public class NodataFragment extends Fragment {
     private static final int QR_SCANNER = 1;
     private OnFragmentInteractionListener mListener;
     private ImageView noDataImage;
-
+    private ImageView edit;
 
 //    static final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
 
@@ -68,7 +68,7 @@ public class NodataFragment extends Fragment {
                 if ( resultCode == Activity.RESULT_OK){
 
                     String result = intent.getExtras().get(Constants.DATA).toString();
-                    Log.i(getActivity().getClass().getName(), result);
+                    Log.i(getActivity().getClass().getName(), "Scan: " +  result);
 
                 }else if (resultCode == Activity.RESULT_CANCELED){
                     if (intent == null){
@@ -146,6 +146,7 @@ public class NodataFragment extends Fragment {
         View myFragmentView =  inflater.inflate(R.layout.fragment_nodata, container, false);
 
         noDataImage = ((ImageView) myFragmentView.findViewById(R.id.qrcode));
+        edit = ((ImageView) myFragmentView.findViewById(R.id.edit));
         noDataImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -154,6 +155,14 @@ public class NodataFragment extends Fragment {
                 Intent a = new Intent(getActivity(), QrScannerActivity.class);
                 startActivityForResult(a, QR_SCANNER);
 
+
+            }
+        });
+
+
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
             }
         });

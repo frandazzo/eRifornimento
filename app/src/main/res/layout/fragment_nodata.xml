@@ -10,14 +10,41 @@
 
     <!--intestazione gruppo di valori per l'auto-->
 
+    <android.support.v7.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:padding="20dp"
 
-    <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/qrcode"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_margin="30dp"
-        android:layout_gravity="center"
-        app:srcCompat="@drawable/qrcode" />
+        android:text="@string/retrievedatiazienda"
+        android:textSize="24sp"
+        app:textAllCaps="true" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/qrcode"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_margin="20dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/qrcode" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/edit"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_margin="20dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/edit" />
+    </LinearLayout>
+
+
+
 
     <!--&lt;!&ndash; TODO: Update blank fragment layout &ndash;&gt;-->
     <!--<TextView-->

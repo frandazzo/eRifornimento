@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements CallbackContext<S
 
 
 
+
+
     private void initInteface() {
         btnFattura = ((Button) findViewById(R.id.btnFattura));
         btnServer = ((Button) findViewById(R.id.btnServer));
@@ -45,14 +47,16 @@ public class MainActivity extends AppCompatActivity implements CallbackContext<S
         image = ((AppCompatImageView) findViewById(R.id.image));
 
 
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startNewFatturaActivity();
+            }
+        });
         btnFattura.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i(MainActivity.class.getName(), "Click pulsante fattura");
-
-
-                Intent i = new Intent(MainActivity.this, FatturaActivity.class);
-                MainActivity.this.startActivity(i);
+                startNewFatturaActivity();
             }
         });
 
@@ -79,6 +83,11 @@ public class MainActivity extends AppCompatActivity implements CallbackContext<S
         progressLayout.setVisibility(View.INVISIBLE);
 
 
+    }
+
+    private void startNewFatturaActivity() {
+        Intent i = new Intent(MainActivity.this, FatturaActivity.class);
+        MainActivity.this.startActivity(i);
     }
 
     private void CheckServerStatus() {

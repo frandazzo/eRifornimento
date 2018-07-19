@@ -49,6 +49,8 @@ public class TargaDialogFragment extends DialogFragment {
         final EditText input = new EditText(getActivity());
 
         FrameLayout container = new FrameLayout(getActivity());
+        container.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
+        container.setFocusableInTouchMode(true);
         FrameLayout.LayoutParams params = new  FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.leftMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
         params.rightMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
@@ -56,7 +58,7 @@ public class TargaDialogFragment extends DialogFragment {
         input.setLayoutParams(params);
         container.addView(input);
         input.setSelectAllOnFocus(true);
-        input.selectAll();
+
         input.setSingleLine();
         input.setText(targa);
         input.setFilters(new InputFilter[]{new InputFilter.AllCaps()});

@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.PointF;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -11,39 +12,56 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
+import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import it.noesis.erifornimento.utils.Constants;
-import me.dm7.barcodescanner.zxing.ZXingScannerView;
+
 
 import static android.Manifest.permission.CAMERA;
 
-public class QrScannerActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler{
+
+public class QrScannerActivity extends AppCompatActivity implements QRCodeReaderView.OnQRCodeReadListener{// implements ZXingScannerView.ResultHandler{
 
     public static final int REQUEST_CAMERA = 1;
-    private ZXingScannerView scannerView;
+    private QRCodeReaderView qrCodeReaderView;
+
+    //private ZXingScannerView scannerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        scannerView = new ZXingScannerView(this);
-        setContentView(scannerView);
-
-        //se la versione delle api è superiore alla 23
-        //allora i permessi li devo chiedere esplicitamente
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            if (evaluatePermission()){
-                //ritorno all'attività chiamante
+//        scannerView = new ZXingScannerView(this);
+//        setContentView(scannerView);
+        setContentView(R.layout.activity_qr_scanner);
 
 
-                Toast.makeText(this,"Permesso concesso precedentemente", Toast.LENGTH_SHORT).show();
 
-            }else{
-                requirePermission();
-            }
-        }
+        qrCodeReaderView = (QRCodeReaderView) findViewById(R.id.qrdecoderview);
+        qrCodeReaderView.setOnQRCodeReadListener(this);
 
+        // Use this function to enable/disable decoding
+        qrCodeReaderView.setQRDecodingEnabled(true);
+
+        // Use this function to change the autofocus interval (default is 5 secs)
+        qrCodeReaderView.setAutofocusInterval(2000L);
+
+        // Use this function to enable/disable Torch
+        // qrCodeReaderView.setTorchEnabled(true);
+
+        // Use this function to set front camera preview
+        //qrCodeReaderView.setFrontCamera();
+
+        // Use this function to set back camera preview
+        qrCodeReaderView.setBackCamera();
+
+
+   
 
     }
 
@@ -54,13 +72,15 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             if (evaluatePermission()){
-                //ritorno all'attività chiamante
-                if (scannerView == null){
-                    scannerView = new ZXingScannerView(this);
-                    setContentView(scannerView);
-                }
-                scannerView.setResultHandler(this);
-                scannerView.startCamera();
+
+//                if (scannerView == null){
+//                    scannerView = new ZXingScannerView(this);
+//                    setContentView(scannerView);
+//                }
+//                scannerView.setResultHandler(this);
+//
+//                scannerView.startCamera();
+                qrCodeReaderView.startCamera();
 
 
             }else{
@@ -70,10 +90,14 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        scannerView.stopCamera();
+    protected void onPause() {
+        super.onPause();
+        //scannerView.stopCamera();
+        qrCodeReaderView.stopCamera();
     }
+
+
+
 
     private void requirePermission() {
         ActivityCompat.requestPermissions(this,new String[]{CAMERA},REQUEST_CAMERA);
@@ -98,6 +122,7 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
                     // permission was granted, yay! Do the
                     // camera-related task you need to do.
                     Toast.makeText(this,"Permesso concesso", Toast.LENGTH_SHORT).show();
+                    finish();
 
                 } else {
                     // permission denied, boo! Disable the
@@ -118,12 +143,20 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
     }
 
     @Override
-    public void handleResult(Result result) {
-            String scanResult = result.getText();
-
+    public void onQRCodeRead(String text, PointF[] points) {
             Intent returnIntent = new Intent();
-            returnIntent.putExtra(Constants.DATA,scanResult);
+            returnIntent.putExtra(Constants.DATA,text);
             setResult(Activity.RESULT_OK,returnIntent);
             finish();
     }
+
+//    @Override
+//    public void handleResult(Result result) {
+//            String scanResult = result.getText();
+//
+//            Intent returnIntent = new Intent();
+//            returnIntent.putExtra(Constants.DATA,scanResult);
+//            setResult(Activity.RESULT_OK,returnIntent);
+//            finish();
+//    }
 }

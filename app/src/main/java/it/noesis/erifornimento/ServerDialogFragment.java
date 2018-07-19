@@ -8,7 +8,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -56,14 +59,21 @@ public class ServerDialogFragment extends DialogFragment {
         FrameLayout.LayoutParams params = new  FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.leftMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
         params.rightMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+        container.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
+        container.setFocusableInTouchMode(true);
 
         input.setLayoutParams(params);
         container.addView(input);
+
+
         input.setSelectAllOnFocus(true);
-        input.selectAll();
+
+
         input.setSingleLine();
 
+
         input.setText(serverUrl);
+        input.clearFocus();
         builder.setView(container);
 
 
