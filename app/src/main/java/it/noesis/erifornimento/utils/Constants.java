@@ -15,4 +15,6 @@ public class Constants {
     public static final String FRAGMENT_NODATA = "nodata";
     public static final String DATA = "data";
     public static final String ERROR = "error";
+    public static final int ACTIVITY_FOR_RESULT_CLIENTE = 111;
+
 }

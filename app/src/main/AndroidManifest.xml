@@ -50,7 +50,7 @@
         <activity
             android:name=".QrScannerActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".ClienteEditActivity"></activity>
+        <activity android:name=".ClienteActivity" android:label="@string/azienda"></activity>
     </application>
 
 </manifest>

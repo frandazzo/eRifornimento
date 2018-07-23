@@ -17,11 +17,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import it.noesis.erifornimento.model.Cliente;
 import it.noesis.erifornimento.model.Fattura;
 import it.noesis.erifornimento.utils.CallbackContext;
 import it.noesis.erifornimento.utils.Constants;
 
-public class FatturaActivity extends AppCompatActivity implements CallbackContext<String>, NodataFragment.OnFragmentInteractionListener {
+public class FatturaActivity extends AppCompatActivity implements CallbackContext<String>, NodataFragment.OnFragmentInteractionListener, ClienteFragment.OnClienteFragmentInteractionListener {
 
     private LinearLayout benzina;
     private LinearLayout metano;
@@ -66,11 +70,11 @@ public class FatturaActivity extends AppCompatActivity implements CallbackContex
 
 
         outState.putString(Constants.DIALOG_TARGA, fattura.getTarga());
-
         outState.putDouble(Constants.DIALOG_BENZINA, fattura.getBenzina());
         outState.putDouble(Constants.DIALOG_DIESEL, fattura.getDiesel());
         outState.putDouble(Constants.DIALOG_GPL, fattura.getGpl());
         outState.putDouble(Constants.DIALOG_METANO, fattura.getMetano());
+
 
 
 
@@ -205,7 +209,7 @@ public class FatturaActivity extends AppCompatActivity implements CallbackContex
         FragmentManager f =  getFragmentManager();
         NodataFragment noData = new NodataFragment();
 
-        f.beginTransaction().add(R.id.fragment_place, noData).commit();
+        f.beginTransaction().replace(R.id.fragment_place, noData).commit();
 
 
         populateData();
@@ -297,7 +301,49 @@ public class FatturaActivity extends AppCompatActivity implements CallbackContex
     }
 
     @Override
-    public void onFragmentInteraction(String data) {
-        Log.i(this.getClass().getName(), "on fragment interatcion log....");
+    public void onCancelClienteData() {
+        fattura.setCliente(null);
+        FragmentManager f =  getFragmentManager();
+        NodataFragment noData = new NodataFragment();
+
+        f.beginTransaction().replace(R.id.fragment_place, noData).commit();
+
+    }
+
+    @Override
+    public void onFragmentInteraction(Cliente cliente, String rawData, boolean isError) {
+
+
+        if (isError){
+            fattura.setCliente(null);
+            Toast.makeText(this, "Codice QR non valido: " + rawData, Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        fattura.setCliente(cliente);
+        FragmentManager f =  getFragmentManager();
+        ClienteFragment frag = new ClienteFragment();
+
+        Bundle bundle = new Bundle();
+        try {
+            bundle.putString("data", new ObjectMapper().writeValueAsString(cliente));
+        } catch (JsonProcessingException e) {
+            Toast.makeText(this, "Errore nel passaggio dati del cliente al fragmente: "+ e.getMessage(), Toast.LENGTH_LONG);
+            return;
+        }
+        frag.setArguments(bundle);
+
+
+
+
+        f.beginTransaction().replace(R.id.fragment_place, frag).commit();
+
+
+
+
+
+
+
+
     }
 }

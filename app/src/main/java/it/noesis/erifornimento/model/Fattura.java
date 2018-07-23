@@ -7,6 +7,7 @@ public class Fattura {
     private Double diesel;
     private Double gpl;
     private Double metano;
+    private Cliente cliente;
 
     public Fattura(){
         benzina = 0d;
@@ -54,5 +55,13 @@ public class Fattura {
 
     public void setMetano(Double metano) {
         this.metano = metano;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
     }
 }

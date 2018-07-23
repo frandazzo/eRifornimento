@@ -18,4 +18,21 @@
     <string name="azienda">Dati azienda</string>
     <string name="retrievedatiazienda">Recupera i dati aziendali</string>
     <string name="invia_fattua_al_server">Invia fattua al server</string>
+    <string name="ragione_sociale">Ragione sociale</string>
+    <string name="xxxxxxxxx">XXXXXXXXX</string>
+    <string name="partita_iva">Partita IVA</string>
+    <string name="cf">Codice fiscale</string>
+    <string name="nazione">Nazionalità</string>
+    <string name="indirizzo">Indirizzo</string>
+    <string name="pec">Pec</string>
+    <string name="code">Codice</string>
+    <string name="qr">Data QR</string>
+    <string name="modifica">Modifica</string>
+    <string name="annulla">Annulla</string>
+    <string name="cap">Cap sede legale</string>
+    <string name="comune">Comune sede legale</string>
+    <string name="provicia">Provincia sede legale</string>
+    <string name="naziones">Nazione sede legale</string>
+    <string name="ok">Ok</string>
+
 </resources>

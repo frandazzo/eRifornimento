@@ -1,16 +1,20 @@
 package it.noesis.erifornimento.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
 
 public class Cliente {
 
-    private Anagrafica anag;
-    private Sdi sdi;
+    private Anagrafica anag = new Anagrafica();
+    private Sdi sdi = new Sdi();
     private Date dtGenQr;
 
+    public Cliente(){
+
+    }
 
     @JsonCreator
     public Cliente(
@@ -44,5 +48,10 @@ public class Cliente {
 
     public void setDtGenQr(Date dtGenQr) {
         this.dtGenQr = dtGenQr;
+    }
+
+    @JsonIgnore
+    public boolean isValid() {
+        return true;
     }
 }

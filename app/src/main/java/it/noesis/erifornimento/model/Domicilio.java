@@ -2,12 +2,17 @@ package it.noesis.erifornimento.model;
 
 public class Domicilio {
 
-    private String  prov;
-    private String  cap;
-    private String  com;
-    private String  ind;
-    private String  naz;
+    private String  prov = "";
+    private String  cap = "";
+    private String  com = "";
+    private String  ind = "";
+    private String  naz = "";
 
+
+    @Override
+    public String toString() {
+        return String.format("%s, %s %s %s %s", ind,cap, com, prov, naz);
+    }
 
     public String getProv() {
         return prov;

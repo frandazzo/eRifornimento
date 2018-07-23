@@ -18,6 +18,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
+
+import it.noesis.erifornimento.model.Cliente;
 import it.noesis.erifornimento.utils.Constants;
 
 import static android.app.Activity.RESULT_OK;
@@ -68,14 +73,52 @@ public class NodataFragment extends Fragment {
                 if ( resultCode == Activity.RESULT_OK){
 
                     String result = intent.getExtras().get(Constants.DATA).toString();
-                    Log.i(getActivity().getClass().getName(), "Scan: " +  result);
+
+                    //tento la conversione da json ad un oggetto java
+                    try {
+                        Cliente f = new ObjectMapper().
+                        readerFor(Cliente.class)
+                        .readValue(result);
+
+                        mListener.onFragmentInteraction(f, result, false);
+
+                    } catch (IOException e) {
+                        mListener.onFragmentInteraction(null, result, true);
+                    }
+
 
                 }else if (resultCode == Activity.RESULT_CANCELED){
                     if (intent == null){
                         return;
                     }
                     String result = intent.getExtras().get(Constants.ERROR).toString();
-                    Log.e(getActivity().getClass().getName(), result);
+                    mListener.onFragmentInteraction(null, result, true);
+                }
+
+                break;
+
+            case Constants.ACTIVITY_FOR_RESULT_CLIENTE:
+                if ( resultCode == Activity.RESULT_OK){
+
+                    String result = intent.getExtras().get(Constants.DATA).toString();
+
+                    //tento la conversione da json ad un oggetto java
+                    try {
+                        Cliente f = new ObjectMapper().readValue(result, Cliente.class);
+
+                        mListener.onFragmentInteraction(f, result, false);
+
+                    } catch (IOException e) {
+                        mListener.onFragmentInteraction(null, result, true);
+                    }
+
+
+
+                }else if (resultCode == Activity.RESULT_CANCELED){
+                    if (intent == null){
+                        return;
+                    }
+
                 }
 
                 break;
@@ -132,12 +175,7 @@ public class NodataFragment extends Fragment {
         // Required empty public constructor
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -163,7 +201,8 @@ public class NodataFragment extends Fragment {
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent i = new Intent(getActivity(), ClienteActivity.class);
+                startActivityForResult(i, Constants.ACTIVITY_FOR_RESULT_CLIENTE);
             }
         });
 
@@ -206,6 +245,6 @@ public class NodataFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(String data);
+        void onFragmentInteraction(Cliente cliente, String rawData, boolean isError);
     }
 }

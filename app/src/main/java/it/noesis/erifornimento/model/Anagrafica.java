@@ -2,11 +2,11 @@ package it.noesis.erifornimento.model;
 
 public class Anagrafica {
 
-    private String naz;
-    private String cf;
-    private String piva;
-    private String denom;
-    private Domicilio domFisc;
+    private String naz = "";
+    private String cf = "";
+    private String piva = "";
+    private String denom = "";
+    private Domicilio domFisc = new Domicilio();
     public Domicilio getDomFisc() {
         return domFisc;
     }
