@@ -46,11 +46,15 @@
         </activity>
         <activity
             android:name=".FatturaActivity"
-            android:label="@string/fatture" />
+            android:label="@string/fatture"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".QrScannerActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".ClienteActivity" android:label="@string/azienda"></activity>
+        <activity
+            android:name=".ClienteActivity"
+            android:label="@string/azienda"
+            android:parentActivityName=".FatturaActivity"></activity>
     </application>
 
 </manifest>

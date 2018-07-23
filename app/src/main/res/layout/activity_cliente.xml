@@ -34,7 +34,11 @@
                 android:id="@+id/txtRagSoc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/ragione_sociale" />
+                android:hint="@string/ragione_sociale"
+                android:textAllCaps="true"
+                android:maxLines="1"
+                android:inputType="text"
+                />
         </LinearLayout>
 
         <LinearLayout
@@ -55,7 +59,8 @@
                 android:id="@+id/txtiva"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/partita_iva" />
+                android:hint="@string/partita_iva"
+                android:inputType="number"/>
         </LinearLayout>
 
         <LinearLayout
@@ -76,7 +81,10 @@
                 android:id="@+id/txtcf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/cf" />
+                android:hint="@string/cf"
+                android:textAllCaps="true"
+                android:maxLines="1"
+                android:inputType="text"/>
         </LinearLayout>
 
         <LinearLayout
@@ -117,7 +125,10 @@
                 android:id="@+id/txtind"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/indirizzo" />
+                android:hint="@string/indirizzo"
+                android:textAllCaps="true"
+                android:maxLines="1"
+                android:inputType="text"/>
         </LinearLayout>
 
         <LinearLayout
@@ -138,7 +149,8 @@
                 android:id="@+id/txtcap"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/cap" />
+                android:hint="@string/cap"
+                android:inputType="number"/>
         </LinearLayout>
 
         <LinearLayout
@@ -153,13 +165,17 @@
             <android.support.v7.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/comune" />
+                android:text="@string/comune"
+                />
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/txtcom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/comune" />
+                android:hint="@string/comune"
+                android:textAllCaps="true"
+                android:maxLines="1"
+                android:inputType="text"/>
         </LinearLayout>
 
 
@@ -227,7 +243,8 @@
                 android:id="@+id/txtpec"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/pec" />
+                android:hint="@string/pec"
+                android:inputType="textEmailAddress"/>
         </LinearLayout>
 
 
@@ -249,7 +266,10 @@
                 android:id="@+id/txtcode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/code" />
+                android:hint="@string/code"
+                android:textAllCaps="true"
+                android:maxLines="1"
+                android:inputType="text"/>
         </LinearLayout>
 
 

@@ -34,5 +34,7 @@
     <string name="provicia">Provincia sede legale</string>
     <string name="naziones">Nazione sede legale</string>
     <string name="ok">Ok</string>
+    <string name="httpserver">http://myserver.com/api/</string>
+    <string name="emptyragione">La ragione sociale non può essere nulla</string>
 
 </resources>

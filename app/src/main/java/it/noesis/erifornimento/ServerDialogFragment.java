@@ -63,6 +63,7 @@ public class ServerDialogFragment extends DialogFragment {
         container.setFocusableInTouchMode(true);
 
         input.setLayoutParams(params);
+        input.setHint(R.string.httpserver);
         container.addView(input);
 
 

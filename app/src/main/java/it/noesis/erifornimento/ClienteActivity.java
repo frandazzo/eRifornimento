@@ -1,8 +1,10 @@
 package it.noesis.erifornimento;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -11,15 +13,21 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
+import java.util.List;
 
 import it.noesis.erifornimento.model.Anagrafica;
 import it.noesis.erifornimento.model.Cliente;
 import it.noesis.erifornimento.model.GeoFactory;
 import it.noesis.erifornimento.model.Sdi;
+
+import static com.basgeekball.awesomevalidation.ValidationStyle.TEXT_INPUT_LAYOUT;
+import static com.basgeekball.awesomevalidation.ValidationStyle.UNDERLABEL;
 
 public class ClienteActivity extends AppCompatActivity {
 
@@ -40,7 +48,11 @@ public class ClienteActivity extends AppCompatActivity {
     private Button btnOk;
     private Button btnCancel;
 
+    private AwesomeValidation mAwesomeValidation;
+
     private Cliente cliente;
+
+    private  GeoFactory geo;
 
 
     @Override
@@ -48,18 +60,39 @@ public class ClienteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cliente);
 
+        mAwesomeValidation = new AwesomeValidation(UNDERLABEL);
+        mAwesomeValidation.setContext(this);
+
         setupSpinners();
         setupTextEdits();
 
+        retrieveClienteData();
+        populateData();
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        initializeClickListeners();
+
+
+        setupValidationRules();
+
+
+    }
+
+    private void setupValidationRules() {
+        mAwesomeValidation.addValidation(this, R.id.txtRagSoc, RegexTemplate.NOT_EMPTY, R.string.emptyragione);
+    }
+
+    private void initializeClickListeners() {
         btnOk = ((Button) findViewById(R.id.btnOk));
         btnCancel = ((Button) findViewById(R.id.btnCancel));
 
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                mAwesomeValidation.clear();
                 LoadClienteData();
-                if (!cliente.isValid()){
+                if (!mAwesomeValidation.validate()){
 
                     //mostro i campi dche non hanno passatyo la validazione
                     return;
@@ -91,12 +124,6 @@ public class ClienteActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-
-        retrieveClienteData();
-
-        populateData();
-
     }
 
     private void LoadClienteData() {
@@ -130,6 +157,8 @@ public class ClienteActivity extends AppCompatActivity {
 
         String nazionalita = cliente.getAnag().getNaz();
         int nazionalitaPosition = getPosition(nazionalita,false);
+        if (nazionalitaPosition == -1)
+            nazionalitaPosition = 122; //italia
         spinnerNationality.setSelection(nazionalitaPosition);
 
 
@@ -144,7 +173,8 @@ public class ClienteActivity extends AppCompatActivity {
 
         int provinciaPosition = getPosition(provinciaAzienda,true);
         int nazionePosition = getPosition(nazioneAzienda,false);
-
+        if (nazionePosition == -1)
+            nazionePosition = 122; //italia
         spinnerNation.setSelection(nazionePosition);
         spinnerProvince.setSelection(provinciaPosition);
 
@@ -154,12 +184,39 @@ public class ClienteActivity extends AppCompatActivity {
     }
 
     private int getPosition(String value, boolean forProvince) {
-        return 0;
+
+        List<String> dataIds = null;
+        if (forProvince){
+            dataIds = geo.getProvincesIds();
+        }else
+        {
+            dataIds = geo.getNationsIds();
+        }
+        value = value.toUpperCase();
+
+        //devo trovare a quale indice si trova l'elemento value
+        int position = dataIds.indexOf(value);
+        return position;
     }
 
 
-    private String getValueFromText(String s, boolean forProvince) {
-        return "";
+    private String getValueFromText(String value, boolean forProvince) {
+
+        List<String> dataIds = null;
+        List<String> data = null;
+        if (forProvince){
+            dataIds = geo.getProvincesIds();
+            data = geo.getProvinces();
+        }else
+        {
+            dataIds = geo.getNationsIds();
+            data = geo.getNations();
+        }
+
+        int position = data.indexOf(value);
+        if (position == -1)
+            return "";
+        return dataIds.get(position);
     }
 
     private void retrieveClienteData() {
@@ -185,18 +242,23 @@ public class ClienteActivity extends AppCompatActivity {
     private void setupTextEdits() {
 
         txtRagSoc = ((EditText) findViewById(R.id.txtRagSoc));
+        txtRagSoc.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
         txtiva = ((EditText) findViewById(R.id.txtiva));
         txtcf = ((EditText) findViewById(R.id.txtcf));
+        txtcf.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
         txtind = ((EditText) findViewById(R.id.txtind));
+        txtind.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
         txtcom = ((EditText) findViewById(R.id.txtcom));
+        txtcom.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
         txtcap = ((EditText) findViewById(R.id.txtcap));
         txtpec = ((EditText) findViewById(R.id.txtpec));
         txtcode = ((EditText) findViewById(R.id.txtcode));
+        txtcode.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
 
     }
 
     private void setupSpinners() {
-        GeoFactory geo = new GeoFactory();
+         geo = new GeoFactory();
 
         spinnerNationality = (Spinner) findViewById(R.id.spnaz);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, geo.getNations());

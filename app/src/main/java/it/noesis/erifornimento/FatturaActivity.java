@@ -20,6 +20,8 @@ import android.widget.Toast;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.IOException;
+
 import it.noesis.erifornimento.model.Cliente;
 import it.noesis.erifornimento.model.Fattura;
 import it.noesis.erifornimento.utils.CallbackContext;
@@ -75,7 +77,17 @@ public class FatturaActivity extends AppCompatActivity implements CallbackContex
         outState.putDouble(Constants.DIALOG_GPL, fattura.getGpl());
         outState.putDouble(Constants.DIALOG_METANO, fattura.getMetano());
 
+        if (fattura.getCliente() != null){
 
+            try {
+                String json = new ObjectMapper().writeValueAsString(fattura.getCliente());
+                outState.putString(Constants.CLIENTE, json);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+
+            }
+
+        }
 
 
     }
@@ -93,6 +105,18 @@ public class FatturaActivity extends AppCompatActivity implements CallbackContex
         f.setDiesel(savedInstanceState.getDouble(Constants.DIALOG_DIESEL));
         f.setGpl(savedInstanceState.getDouble(Constants.DIALOG_GPL));
         f.setMetano(savedInstanceState.getDouble(Constants.DIALOG_METANO));
+
+        String c = savedInstanceState.getString(Constants.CLIENTE);
+        if (!TextUtils.isEmpty(c)){
+            try {
+                Cliente cliente = new ObjectMapper().readValue(c, Cliente.class);
+                f.setCliente(cliente);
+
+            } catch (IOException e) {
+                return f;
+            }
+        }
+
 
         return f;
     }
@@ -207,9 +231,26 @@ public class FatturaActivity extends AppCompatActivity implements CallbackContex
 
         //imposto il fragment iniziale
         FragmentManager f =  getFragmentManager();
-        NodataFragment noData = new NodataFragment();
+        if (fattura.getCliente() == null){
 
-        f.beginTransaction().replace(R.id.fragment_place, noData).commit();
+            NodataFragment noData = new NodataFragment();
+
+            f.beginTransaction().replace(R.id.fragment_place, noData).commit();
+        }else{
+            ClienteFragment ff = new ClienteFragment();
+            Bundle bundle = new Bundle();
+            try {
+                String json = new ObjectMapper().writeValueAsString(fattura.getCliente());
+                bundle.putString("data", json);
+                ff.setArguments(bundle);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+
+
+            f.beginTransaction().replace(R.id.fragment_place, ff).commit();
+        }
+
 
 
         populateData();
