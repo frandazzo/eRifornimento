@@ -53,8 +53,9 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".ClienteActivity"
-            android:label="@string/azienda"
-            android:parentActivityName=".FatturaActivity"></activity>
+
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            ></activity>
     </application>
 
 </manifest>

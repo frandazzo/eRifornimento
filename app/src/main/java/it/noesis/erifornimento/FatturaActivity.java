@@ -9,8 +9,11 @@ import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -24,10 +27,12 @@ import java.io.IOException;
 
 import it.noesis.erifornimento.model.Cliente;
 import it.noesis.erifornimento.model.Fattura;
+import it.noesis.erifornimento.tasks.AsyncTaskCallbackContext;
+import it.noesis.erifornimento.tasks.SendFatturaTask;
 import it.noesis.erifornimento.utils.CallbackContext;
 import it.noesis.erifornimento.utils.Constants;
 
-public class FatturaActivity extends AppCompatActivity implements CallbackContext<String>, NodataFragment.OnFragmentInteractionListener, ClienteFragment.OnClienteFragmentInteractionListener {
+public class FatturaActivity extends AppCompatActivity implements AsyncTaskCallbackContext<String> , CallbackContext<String>, NodataFragment.OnFragmentInteractionListener, ClienteFragment.OnClienteFragmentInteractionListener {
 
     private LinearLayout benzina;
     private LinearLayout metano;
@@ -35,12 +40,17 @@ public class FatturaActivity extends AppCompatActivity implements CallbackContex
     private LinearLayout diesel;
     private LinearLayout targa;
 
+    private LinearLayout progressLayout;
+    private LinearLayout container;
+    private LinearLayout supercontainer;
+
 
     private TextView benzinaValue;
     private TextView metanoValue;
     private TextView gplValue;
     private TextView dieselValue;
     private TextView targaValue;
+    //private Toolbar mToolbar;
 
     private Fattura fattura;
 
@@ -51,6 +61,17 @@ public class FatturaActivity extends AppCompatActivity implements CallbackContex
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fattura);
 
+//        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(mToolbar);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
+//        getSupportActionBar().setTitle("Nuova fattura");
+
+        container = ((LinearLayout) findViewById(R.id.container));
+        supercontainer = ((LinearLayout) findViewById(R.id.supercontainer));
+        progressLayout = ((LinearLayout) findViewById(R.id.progressLayout));
+        progressLayout.setVisibility(View.GONE);
+
         //inizializo l'istanza che conterrà i valori selezionati dall'utente
         fattura = initializeFatturaData(savedInstanceState);
         sendFattura = ((Button) findViewById(R.id.sendfattura));
@@ -58,11 +79,22 @@ public class FatturaActivity extends AppCompatActivity implements CallbackContex
         sendFattura.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i(FatturaActivity.this.getClass().getName(), "Clikc  pulsante fattura");
+
+                new SendFatturaTask(FatturaActivity.this).execute(fattura);
+
             }
         });
         //inizializzo tutti i componeneti dell'interfaccia
         initInterface();
+
+        sendFattura.setEnabled(enableSendFatturaButton());
+    }
+
+
+    private boolean enableSendFatturaButton(){
+        if (fattura == null)
+            return false;
+        return fattura.isValid();
     }
 
 
@@ -332,6 +364,10 @@ public class FatturaActivity extends AppCompatActivity implements CallbackContex
                     populateDoubleFileds(value3, metanoValue);
                     break;
             }
+
+        sendFattura.setEnabled(enableSendFatturaButton());
+
+
     }
 
     private void populateFieldTarga(String returnData) {
@@ -348,7 +384,7 @@ public class FatturaActivity extends AppCompatActivity implements CallbackContex
         NodataFragment noData = new NodataFragment();
 
         f.beginTransaction().replace(R.id.fragment_place, noData).commit();
-
+        sendFattura.setEnabled(enableSendFatturaButton());
     }
 
     @Override
@@ -373,18 +409,61 @@ public class FatturaActivity extends AppCompatActivity implements CallbackContex
             return;
         }
         frag.setArguments(bundle);
-
-
-
-
         f.beginTransaction().replace(R.id.fragment_place, frag).commit();
 
 
-
-
-
-
-
+        sendFattura.setEnabled(enableSendFatturaButton());
 
     }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case android.R.id.home:
+//                // todo: goto back activity from here
+//
+//
+//                return true;
+//
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+//    }
+
+    @Override
+    public void onPreExecute() {
+        progressLayout.setVisibility(View.VISIBLE);
+        container.setVisibility(View.GONE);
+
+
+//        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//
+//        params.gravity = Gravity.CENTER;
+//
+//        supercontainer.setLayoutParams(params);
+    }
+
+    @Override
+    public void onPostExecute(String s) {
+        progressLayout.setVisibility(View.GONE);
+        container.setVisibility(View.VISIBLE);
+
+//        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//
+//        params.gravity = Gravity.FILL;
+//
+//        supercontainer.setLayoutParams(params);
+
+        if (s.equals("ok")){
+            Intent i = new Intent();
+            i.putExtra("data", s);
+            setResult(RESULT_OK, i);
+            finish();
+            return;
+        }
+
+        Toast.makeText(this,"Errore: " + s, Toast.LENGTH_LONG);
+    }
+
+
+//
 }

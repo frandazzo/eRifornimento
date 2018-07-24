@@ -36,5 +36,12 @@
     <string name="ok">Ok</string>
     <string name="httpserver">http://myserver.com/api/</string>
     <string name="emptyragione">La ragione sociale non può essere nulla</string>
+    <string name="emptypartitaiva">La partita iva non puo essere nulla</string>
+    <string name="invalidpartitaiva">La partita iva deve essere composta di 11 numeri</string>
+    <string name="invalidmail">La mail non è corretta</string>
+    <string name="invalidmailorCode">O la mail o il codice devono essere presenti e validi</string>
+    <string name="emptycap">Il CAP non può essere nullo</string>
+    <string name="emptyindirizzo">L\'indirizzo non può essere nullo</string>
+    <string name="emptycomune">Il comune non può essere nullo</string>
 
 </resources>

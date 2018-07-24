@@ -52,6 +52,18 @@ public class Cliente {
 
     @JsonIgnore
     public boolean isValid() {
-        return true;
+
+        if (anag == null)
+            return false;
+
+        if (!anag.isValid())
+            return false;
+
+        if (sdi == null)
+            return false;
+
+        return sdi.isValid();
+
+
     }
 }

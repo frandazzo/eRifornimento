@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.InputFilter;
 import android.text.TextUtils;
+import android.util.Patterns;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -15,6 +18,7 @@ import android.widget.Toast;
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
+import com.basgeekball.awesomevalidation.utility.custom.SimpleCustomValidation;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -26,6 +30,7 @@ import it.noesis.erifornimento.model.Cliente;
 import it.noesis.erifornimento.model.GeoFactory;
 import it.noesis.erifornimento.model.Sdi;
 
+import static com.basgeekball.awesomevalidation.ValidationStyle.BASIC;
 import static com.basgeekball.awesomevalidation.ValidationStyle.TEXT_INPUT_LAYOUT;
 import static com.basgeekball.awesomevalidation.ValidationStyle.UNDERLABEL;
 
@@ -48,6 +53,8 @@ public class ClienteActivity extends AppCompatActivity {
     private Button btnOk;
     private Button btnCancel;
 
+    private Toolbar mToolbar;
+
     private AwesomeValidation mAwesomeValidation;
 
     private Cliente cliente;
@@ -60,8 +67,15 @@ public class ClienteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cliente);
 
-        mAwesomeValidation = new AwesomeValidation(UNDERLABEL);
-        mAwesomeValidation.setContext(this);
+
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        //getSupportActionBar().setTitle("MyTitle");
+
+        mAwesomeValidation = new AwesomeValidation(BASIC);
+       // mAwesomeValidation.setContext(this);
 
         setupSpinners();
         setupTextEdits();
@@ -80,7 +94,93 @@ public class ClienteActivity extends AppCompatActivity {
     }
 
     private void setupValidationRules() {
+        mAwesomeValidation.addValidation(this, R.id.txtcom, RegexTemplate.NOT_EMPTY, R.string.emptycomune);
+        mAwesomeValidation.addValidation(this, R.id.txtind, RegexTemplate.NOT_EMPTY, R.string.emptyindirizzo);
+        mAwesomeValidation.addValidation(this, R.id.txtcap, RegexTemplate.NOT_EMPTY, R.string.emptycap);
+
         mAwesomeValidation.addValidation(this, R.id.txtRagSoc, RegexTemplate.NOT_EMPTY, R.string.emptyragione);
+        mAwesomeValidation.addValidation(this, R.id.txtiva, RegexTemplate.NOT_EMPTY, R.string.emptypartitaiva);
+        mAwesomeValidation.addValidation(this, R.id.txtiva, new SimpleCustomValidation() {
+            @Override
+            public boolean compare(String s) {
+                if (TextUtils.isEmpty(s))
+                    return false;
+
+                if (s.length() != 11)
+                    return false;
+
+                return true;
+            }
+        }, R.string.invalidpartitaiva);
+        mAwesomeValidation.addValidation(this, R.id.txtpec, new SimpleCustomValidation() {
+            @Override
+            public boolean compare(String s) {
+
+                //se la mail è vuota e il codice è valorizzato va bene
+                if (TextUtils.isEmpty(s) && !TextUtils.isEmpty(txtcode.getText().toString()))
+                    return true;
+                //se sono entrambi nulli non va bene
+                if (TextUtils.isEmpty(s) && TextUtils.isEmpty(txtcode.getText().toString()))
+                    return false;
+
+                //se la mail è non vuota e il codice non è valorizzato va bene a patto di verifcare lamail
+                if (!TextUtils.isEmpty(s) && TextUtils.isEmpty(txtcode.getText().toString())){
+                    //deov verificare che la mail sia valida
+                    if (s.matches(Patterns.EMAIL_ADDRESS.toString())) ///^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/
+                        return true;
+
+                    return  false;
+                }
+
+                //se sono entrambi valorizzati allora teesto solo la mail
+                if (!TextUtils.isEmpty(s) && !TextUtils.isEmpty(txtcode.getText().toString())){
+                    //deov verificare che la mail sia valida
+                    if (s.matches(Patterns.EMAIL_ADDRESS.toString())) ///^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/
+                        return true;
+
+                    return  false;
+                }
+
+                return true;
+
+            }
+        }, R.string.invalidmailorCode);
+
+
+        mAwesomeValidation.addValidation(this, R.id.txtcode, new SimpleCustomValidation() {
+            @Override
+            public boolean compare(String s) {
+
+                //se il codice è vuoto e la mail valorizzata allora verifico la mail
+                if (TextUtils.isEmpty(s) && !TextUtils.isEmpty(txtpec.getText().toString()))
+                {
+                    if (txtpec.getText().toString().matches(Patterns.EMAIL_ADDRESS.toString())) ///^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/
+                        return true;
+
+                    return  false;
+                }
+                //se sono entrambi nulli non va bene
+                if (TextUtils.isEmpty(s) && TextUtils.isEmpty(txtpec.getText().toString()))
+                    return false;
+
+                //se il codice è valorizzato e la mail no tutto ok
+                if (!TextUtils.isEmpty(s) && TextUtils.isEmpty(txtpec.getText().toString()))
+                    return true;
+
+                //se sono entrambi valorizzati allora teesto solo la mail
+                if (!TextUtils.isEmpty(s) && !TextUtils.isEmpty(txtpec.getText().toString())){
+                    //deov verificare che la mail sia valida
+                    if (txtpec.getText().toString().matches(Patterns.EMAIL_ADDRESS.toString())) ///^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/
+                        return true;
+
+                    return  false;
+                }
+
+                return true;
+
+            }
+        }, R.string.invalidmailorCode);
+
     }
 
     private void initializeClickListeners() {
@@ -278,5 +378,21 @@ public class ClienteActivity extends AppCompatActivity {
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerProvince.setAdapter(adapter2);
         spinnerProvince.setSelection(0);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // todo: goto back activity from here
+
+                Intent intent = new Intent();
+                setResult(RESULT_CANCELED, intent);
+                finish();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

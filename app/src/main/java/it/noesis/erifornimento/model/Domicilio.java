@@ -1,5 +1,9 @@
 package it.noesis.erifornimento.model;
 
+import android.text.TextUtils;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Domicilio {
 
     private String  prov = "";
@@ -52,5 +56,18 @@ public class Domicilio {
 
     public void setNaz(String naz) {
         this.naz = naz;
+    }
+    @JsonIgnore
+    public boolean isValid() {
+
+
+        if (TextUtils.isEmpty(com))
+            return false;
+        if (TextUtils.isEmpty(cap))
+            return false;
+        if (TextUtils.isEmpty(ind))
+            return false;
+
+        return true;
     }
 }

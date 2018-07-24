@@ -1,5 +1,9 @@
 package it.noesis.erifornimento.model;
 
+import android.text.TextUtils;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Fattura {
 
     private String targa;
@@ -63,5 +67,22 @@ public class Fattura {
 
     public Cliente getCliente() {
         return cliente;
+    }
+    @JsonIgnore
+    public boolean isValid() {
+
+        if (TextUtils.isEmpty(targa))
+            return false;
+
+        if (benzina <= 0d && metano <= 0d && gpl <= 0d && diesel <=0d)
+            return false;
+
+
+        if (cliente == null)
+            return false;
+
+        return cliente.isValid();
+
+
     }
 }

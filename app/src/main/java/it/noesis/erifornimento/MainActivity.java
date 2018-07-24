@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import it.noesis.erifornimento.tasks.AsyncTaskCallbackContext;
 import it.noesis.erifornimento.tasks.PingTask;
@@ -87,7 +88,22 @@ public class MainActivity extends AppCompatActivity implements CallbackContext<S
 
     private void startNewFatturaActivity() {
         Intent i = new Intent(MainActivity.this, FatturaActivity.class);
-        MainActivity.this.startActivity(i);
+        startActivityForResult(i, 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data == null)
+            return;
+
+        if (requestCode == 1){
+
+            if (resultCode == RESULT_OK){
+                String result = data.getExtras().getString("data");
+                Toast.makeText(this,"Invio effettuato con successo: " + result, Toast.LENGTH_LONG).show();
+            }
+
+        }
     }
 
     private void CheckServerStatus() {

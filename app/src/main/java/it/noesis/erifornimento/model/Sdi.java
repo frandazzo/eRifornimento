@@ -1,5 +1,9 @@
 package it.noesis.erifornimento.model;
 
+import android.text.TextUtils;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Sdi {
 
     private String pec;
@@ -19,5 +23,14 @@ public class Sdi {
 
     public void setCod(String cod) {
         this.cod = cod;
+    }
+    @JsonIgnore
+    public boolean isValid() {
+
+
+        if (TextUtils.isEmpty(pec) && TextUtils.isEmpty(cod))
+            return false;
+
+        return true;
     }
 }

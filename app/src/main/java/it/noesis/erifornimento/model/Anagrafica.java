@@ -1,5 +1,9 @@
 package it.noesis.erifornimento.model;
 
+import android.text.TextUtils;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Anagrafica {
 
     private String naz = "";
@@ -49,5 +53,25 @@ public class Anagrafica {
         this.denom = denom;
     }
 
+    @JsonIgnore
+    public boolean isValid() {
 
+        if (TextUtils.isEmpty(denom))
+            return false;
+
+        if (TextUtils.isEmpty(piva))
+            return false;
+
+        if (piva.length()!= 11)
+            return false;
+
+        if (domFisc == null)
+            return false;
+
+
+        return domFisc.isValid();
+
+
+
+    }
 }
