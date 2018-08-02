@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Anagrafica {
 
-    private  String example;
+
 
     private String naz = "";
     private String cf = "";
