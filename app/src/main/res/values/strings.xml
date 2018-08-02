@@ -43,5 +43,6 @@
     <string name="emptycap">Il CAP non può essere nullo</string>
     <string name="emptyindirizzo">L\'indirizzo non può essere nullo</string>
     <string name="emptycomune">Il comune non può essere nullo</string>
+    <string name="totale">Totale</string>
 
 </resources>

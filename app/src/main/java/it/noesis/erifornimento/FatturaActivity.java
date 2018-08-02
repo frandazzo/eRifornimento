@@ -16,6 +16,7 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,21 +35,21 @@ import it.noesis.erifornimento.utils.Constants;
 
 public class FatturaActivity extends AppCompatActivity implements AsyncTaskCallbackContext<String> , CallbackContext<String>, NodataFragment.OnFragmentInteractionListener, ClienteFragment.OnClienteFragmentInteractionListener {
 
-    private LinearLayout benzina;
-    private LinearLayout metano;
-    private LinearLayout gpl;
-    private LinearLayout diesel;
+    private ImageView benzina;
+    private ImageView metano;
+    private ImageView gpl;
+    private ImageView diesel;
     private LinearLayout targa;
 
     private LinearLayout progressLayout;
     private LinearLayout container;
     private LinearLayout supercontainer;
 
-
-    private TextView benzinaValue;
-    private TextView metanoValue;
-    private TextView gplValue;
-    private TextView dieselValue;
+    private TextView totaleValue;
+//    private TextView benzinaValue;
+//    private TextView metanoValue;
+//    private TextView gplValue;
+//    private TextView dieselValue;
     private TextView targaValue;
     //private Toolbar mToolbar;
 
@@ -156,15 +157,17 @@ public class FatturaActivity extends AppCompatActivity implements AsyncTaskCallb
     private void initInterface() {
 
         targa = ((LinearLayout) findViewById(R.id.targa));
-        benzina = ((LinearLayout) findViewById(R.id.benzina));
-        gpl = ((LinearLayout) findViewById(R.id.gpl));
-        diesel = ((LinearLayout) findViewById(R.id.diesel));
-        metano = ((LinearLayout) findViewById(R.id.metano));
+        benzina = ((ImageView) findViewById(R.id.benzina));
+        gpl = ((ImageView) findViewById(R.id.gpl));
+        diesel = ((ImageView) findViewById(R.id.diesel));
+        metano = ((ImageView) findViewById(R.id.metano));
 
-        benzinaValue =((TextView) findViewById(R.id.benzina_value));
-        metanoValue =((TextView) findViewById(R.id.metano_value));
-        gplValue =((TextView) findViewById(R.id.gpl_value));
-        dieselValue =((TextView) findViewById(R.id.diesel_value));
+        totaleValue =((TextView) findViewById(R.id.totale_value));
+
+//        benzinaValue =((TextView) findViewById(R.id.benzina_value));
+//        metanoValue =((TextView) findViewById(R.id.metano_value));
+//        gplValue =((TextView) findViewById(R.id.gpl_value));
+//        dieselValue =((TextView) findViewById(R.id.diesel_value));
         targaValue =((TextView) findViewById(R.id.targa_value));
 
 
@@ -292,10 +295,10 @@ public class FatturaActivity extends AppCompatActivity implements AsyncTaskCallb
     }
 
     private void populateData() {
-        populateDoubleFileds(fattura.getBenzina(), benzinaValue);
-        populateDoubleFileds(fattura.getMetano(), metanoValue);
-        populateDoubleFileds(fattura.getGpl(), gplValue);
-        populateDoubleFileds(fattura.getDiesel(), dieselValue);
+        populateDoubleFileds(fattura.calculateTotal(), totaleValue);
+//        populateDoubleFileds(fattura.getMetano(), metanoValue);
+//        populateDoubleFileds(fattura.getGpl(), gplValue);
+//        populateDoubleFileds(fattura.getDiesel(), dieselValue);
         populateFieldTarga(fattura.getTarga());
 
     }
@@ -323,9 +326,13 @@ public class FatturaActivity extends AppCompatActivity implements AsyncTaskCallb
                     }catch (Exception e){
 
                     }
-
+                    if (value == 0d){
+                        benzina.setImageResource(R.drawable.ic_benzina);
+                    }else{
+                        benzina.setImageResource(R.drawable.ic_benzina_checked);
+                    }
                     fattura.setBenzina(value);
-                    populateDoubleFileds(value, benzinaValue);
+                    populateDoubleFileds(fattura.calculateTotal(), totaleValue);
                     break;
                 case  Constants.DIALOG_DIESEL:
                     Double value1 = 0d;
@@ -335,9 +342,14 @@ public class FatturaActivity extends AppCompatActivity implements AsyncTaskCallb
                     }catch (Exception e){
 
                     }
+                    if (value1 == 0d){
+                        diesel.setImageResource(R.drawable.ic_diesel);
+                    }else{
+                        diesel.setImageResource(R.drawable.ic_diesel_checked);
+                    }
 
                     fattura.setDiesel(value1);
-                    populateDoubleFileds(value1, dieselValue);
+                    populateDoubleFileds(fattura.calculateTotal(), totaleValue);
                     break;
                 case  Constants.DIALOG_GPL:
                     Double value2 = 0d;
@@ -347,9 +359,14 @@ public class FatturaActivity extends AppCompatActivity implements AsyncTaskCallb
                     }catch (Exception e){
 
                     }
+                    if (value2 == 0d){
+                        gpl.setImageResource(R.drawable.ic_gpl);
+                    }else{
+                        gpl.setImageResource(R.drawable.ic_gpl_checked);
+                    }
 
                     fattura.setGpl(value2);
-                    populateDoubleFileds(value2, gplValue);
+                    populateDoubleFileds(fattura.calculateTotal(), totaleValue);
                     break;
                 case  Constants.DIALOG_METANO:
                     Double value3 = 0d;
@@ -360,8 +377,14 @@ public class FatturaActivity extends AppCompatActivity implements AsyncTaskCallb
 
                     }
 
+                    if (value3 == 0d){
+                        metano.setImageResource(R.drawable.ic_metano);
+                    }else{
+                        metano.setImageResource(R.drawable.ic_metano_checked);
+                    }
+
                     fattura.setMetano(value3);
-                    populateDoubleFileds(value3, metanoValue);
+                    populateDoubleFileds(fattura.calculateTotal(), totaleValue);
                     break;
             }
 

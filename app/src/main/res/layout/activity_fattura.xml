@@ -29,13 +29,13 @@
 
 
             <!--intestazione gruppo di valori per l'auto-->
-            <android.support.v7.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="20dp"
-                android:text="@string/automobile"
-                android:textColor="@color/colorPrimary"
-                android:textSize="18sp" />
+            <!--<android.support.v7.widget.AppCompatTextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:padding="20dp"-->
+                <!--android:text="@string/automobile"-->
+                <!--android:textColor="@color/colorPrimary"-->
+                <!--android:textSize="18sp" />-->
             <!--targa-->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -57,93 +57,173 @@
                     android:id="@+id/targa_value"/>
 
             </LinearLayout>
+
+
+            <!--benzina diesel-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/ic_benzina"
+                    android:id="@+id/benzina"/>
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/ic_diesel"
+                    android:id="@+id/diesel"/>
+
+
+
+            </LinearLayout>
+
+
+            <!--gpl metano-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="20dp">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/ic_gpl"
+                    android:id="@+id/gpl"/>
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/ic_metano"
+                    android:id="@+id/metano"/>
+
+
+
+            </LinearLayout>
+
+
             <!--importo benzina-->
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="20dp"
-                android:id="@+id/benzina">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:id="@+id/totale">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/benzina"
-                    android:textSize="18sp"
-                    android:textColor="#000"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/euro"
-                    android:id="@+id/benzina_value"
+            <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/totale"
+            android:textSize="22sp"
+            android:textColor="#000"/>
+            <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/euro"
+            android:id="@+id/totale_value"
 
-                    />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="20dp"
-                android:id="@+id/diesel">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/diesel"
-                    android:textSize="18sp"
-                    android:textColor="#000"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/euro"
-                    android:id="@+id/diesel_value"/>
+            />
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="20dp"
-                android:id="@+id/gpl">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/gpl"
-                    android:textSize="18sp"
-                    android:textColor="#000"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/euro"
-                    android:id="@+id/gpl_value"/>
+            <!--importo benzina-->
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="vertical"-->
+                <!--android:padding="20dp"-->
+                <!--android:id="@+id/benzina">-->
 
-            </LinearLayout>
+                <!--<TextView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="@string/benzina"-->
+                    <!--android:textSize="18sp"-->
+                    <!--android:textColor="#000"/>-->
+                <!--<TextView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="@string/euro"-->
+                    <!--android:id="@+id/benzina_value"-->
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="20dp"
-                android:id="@+id/metano"
-                >
+                    <!--/>-->
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/metano"
-                    android:textSize="18sp"
-                    android:textColor="#000"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/euro"
-                    android:id="@+id/metano_value"/>
+            <!--</LinearLayout>-->
 
-            </LinearLayout>
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="vertical"-->
+                <!--android:padding="20dp"-->
+                <!--android:id="@+id/diesel">-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="@string/diesel"-->
+                    <!--android:textSize="18sp"-->
+                    <!--android:textColor="#000"/>-->
+                <!--<TextView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="@string/euro"-->
+                    <!--android:id="@+id/diesel_value"/>-->
+
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="vertical"-->
+                <!--android:padding="20dp"-->
+                <!--android:id="@+id/gpl">-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="@string/gpl"-->
+                    <!--android:textSize="18sp"-->
+                    <!--android:textColor="#000"/>-->
+                <!--<TextView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="@string/euro"-->
+                    <!--android:id="@+id/gpl_value"/>-->
+
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="vertical"-->
+                <!--android:padding="20dp"-->
+                <!--android:id="@+id/metano"-->
+                <!--&gt;-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="@string/metano"-->
+                    <!--android:textSize="18sp"-->
+                    <!--android:textColor="#000"/>-->
+                <!--<TextView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="@string/euro"-->
+                    <!--android:id="@+id/metano_value"/>-->
+
+            <!--</LinearLayout>-->
             <!--separatore-->
             <View
                 android:layout_width="match_parent"

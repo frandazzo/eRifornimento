@@ -21,6 +21,10 @@ public class Fattura {
         targa = "";
     }
 
+    public double calculateTotal(){
+        return benzina + diesel + metano + gpl;
+    }
+
     public String getTarga() {
         return targa;
     }
