@@ -243,6 +243,8 @@
                 android:text="@string/invia_fattua_al_server"
                 android:enabled="false"
                 android:id="@+id/sendfattura"
+                android:background="@color/colorPrimary"
+                android:textColor="#fff"
                 />
 
 
