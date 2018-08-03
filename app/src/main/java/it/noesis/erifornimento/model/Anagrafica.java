@@ -6,8 +6,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Anagrafica {
 
-
-
     private String naz = "";
     private String cf = "";
     private String piva = "";
@@ -20,7 +18,6 @@ public class Anagrafica {
     public void setDomFisc(Domicilio domFisc) {
         this.domFisc = domFisc;
     }
-
 
 
     public String getNaz() {
