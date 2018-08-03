@@ -17,13 +17,13 @@ public class PingTask extends AsyncTask<String, Void, String> {
     protected String doInBackground(String... strings) {
 
         try {
-            Thread.sleep(3000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        if (strings[0].length() > 3)
-            return strings[0];
+//        if (strings[0].length() > 3)
+//            return strings[0];
 
         return "";
     }

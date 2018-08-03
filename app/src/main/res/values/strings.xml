@@ -34,7 +34,7 @@
     <string name="provicia">Provincia sede legale</string>
     <string name="naziones">Nazione sede legale</string>
     <string name="ok">Ok</string>
-    <string name="httpserver">http://myserver.com/api/</string>
+    <string name="httpserver">http://192.168.1.15:8080</string>
     <string name="emptyragione">La ragione sociale non può essere nulla</string>
     <string name="emptypartitaiva">La partita iva non puo essere nulla</string>
     <string name="invalidpartitaiva">La partita iva deve essere composta di 11 numeri</string>
@@ -44,5 +44,20 @@
     <string name="emptyindirizzo">L\'indirizzo non può essere nullo</string>
     <string name="emptycomune">Il comune non può essere nullo</string>
     <string name="totale">Totale</string>
+    <string name="title_activity_login">Login</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Login</string>
+    <string name="action_sign_in_short">Login</string>
+    <string name="error_invalid_email">Username richiesto</string>
+    <string name="error_invalid_password">Password richiesta</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">Campo obbligatorio</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="logout">Logout</string>
 
 </resources>
