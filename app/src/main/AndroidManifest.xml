@@ -17,6 +17,8 @@
         android:name="android.hardware.camera.autofocus"
         android:required="false" />
 
+
+
     <!-- <uses-feature -->
     <!-- android:name="android.hardware.camera.flash" -->
     <!-- android:required="false" /> -->
@@ -47,15 +49,16 @@
         <activity
             android:name=".FatturaActivity"
             android:label="@string/fatture"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".QrScannerActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".ClienteActivity"
-
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            ></activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".FirstAccessActivity" />
+        <activity android:name=".Login2Activity"
+            android:label="@string/title_activity_login"></activity>
     </application>
 
 </manifest>

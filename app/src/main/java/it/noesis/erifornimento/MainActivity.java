@@ -7,7 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatImageView;
 import android.text.TextUtils;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -35,11 +36,48 @@ public class MainActivity extends AppCompatActivity implements CallbackContext<S
 
         initInteface();
 
+        if (getIntent().getExtras() != null){
+            String loggedUser = getIntent().getExtras().getString(Constants.LOGGED_USERNAME);
+            if ( loggedUser != null){
+                Toast.makeText(this, "Benvenuto " + loggedUser, Toast.LENGTH_SHORT).show();
+            }
+        }
+
+
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
 
 
+        switch (item.getItemId()){
+            case R.id.menuserver:
 
+                break;
+            case R.id.menulogout:
+                logout();
+                Intent i = new Intent(this, Login2Activity.class);
+                startActivity(i);
+                finish();
+                break;
+        }
+
+        return true;
+    }
+
+    private void logout() {
+        SharedPreferences prefs = getSharedPreferences(Constants.PREFERENCES, MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(Constants.PREFERENCES_USER_TOKEN, "");
+        editor.commit();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.my_menu, menu);
+
+        return true;
+    }
 
     private void initInteface() {
         btnFattura = ((Button) findViewById(R.id.btnFattura));
