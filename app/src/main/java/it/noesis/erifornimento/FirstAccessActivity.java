@@ -119,7 +119,7 @@ public class FirstAccessActivity extends AppCompatActivity implements CallbackCo
         }
 
         //mostro un messaggio di errore
-        Toast.makeText(this, "Server irraggiungibile: " + s, Toast.LENGTH_LONG);
+        Toast.makeText(this, "Server irraggiungibile: " + s, Toast.LENGTH_LONG).show();
     }
 
     private String getUserToken() {

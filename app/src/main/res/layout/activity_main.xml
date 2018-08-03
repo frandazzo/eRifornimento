@@ -14,31 +14,52 @@
         app:srcCompat="@drawable/rifornimento"
         android:id="@+id/image"/>
 
-    <android.support.v7.widget.AppCompatButton
-        android:id="@+id/btnFattura"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/padding_end_button"
-        android:layout_marginLeft="@dimen/padding_end_button"
-        android:layout_marginRight="@dimen/padding_end_button"
-        android:layout_marginStart="@dimen/padding_end_button"
-        android:background="@color/colorPrimary"
-        android:text="@string/nuova_fattura"
-        android:textColor="#fff"/>
+    <!--<android.support.v7.widget.AppCompatButton-->
+        <!--android:id="@+id/btnFattura"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginEnd="@dimen/padding_end_button"-->
+        <!--android:layout_marginLeft="@dimen/padding_end_button"-->
+        <!--android:layout_marginRight="@dimen/padding_end_button"-->
+        <!--android:layout_marginStart="@dimen/padding_end_button"-->
+        <!--android:background="@color/colorPrimary"-->
+        <!--android:text="@string/nuova_fattura"-->
+        <!--android:textColor="#fff"/>-->
 
-    <android.support.v7.widget.AppCompatButton
-        android:id="@+id/btnServer"
+    <android.support.v7.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/padding_end_button"
-        android:layout_marginLeft="@dimen/padding_end_button"
-        android:layout_marginRight="@dimen/padding_end_button"
-        android:layout_marginStart="@dimen/padding_end_button"
-        android:layout_marginTop="30dp"
-        android:background="@color/colorPrimary"
-        android:textColor="#fff"
-        android:text="@string/imposta_server"
-        />
+        android:id="@+id/sta_container">
+
+        <com.ncorti.slidetoact.SlideToActView
+            app:outer_color="@color/colorPrimary"
+            android:id="@+id/example"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:text="@string/nuova_fattura"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            app:text_style="bold"
+            />
+
+    </android.support.v7.widget.LinearLayoutCompat>
+
+
+    <!--<android.support.v7.widget.AppCompatButton-->
+        <!--android:id="@+id/btnServer"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginEnd="@dimen/padding_end_button"-->
+        <!--android:layout_marginLeft="@dimen/padding_end_button"-->
+        <!--android:layout_marginRight="@dimen/padding_end_button"-->
+        <!--android:layout_marginStart="@dimen/padding_end_button"-->
+        <!--android:layout_marginTop="30dp"-->
+        <!--android:background="@color/colorPrimary"-->
+        <!--android:textColor="#fff"-->
+        <!--android:text="@string/imposta_server"-->
+        <!--/>-->
+
+
 
 
     <LinearLayout
@@ -64,6 +85,9 @@
 
 
     </LinearLayout>
+
+
+
 
 
 </LinearLayout>

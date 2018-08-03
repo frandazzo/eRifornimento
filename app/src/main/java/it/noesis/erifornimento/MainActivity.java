@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.ncorti.slidetoact.SlideToActView;
+
 import it.noesis.erifornimento.tasks.AsyncTaskCallbackContext;
 import it.noesis.erifornimento.tasks.PingTask;
 import it.noesis.erifornimento.utils.CallbackContext;
@@ -21,12 +23,14 @@ import it.noesis.erifornimento.utils.Constants;
 
 public class MainActivity extends AppCompatActivity implements CallbackContext<String>, AsyncTaskCallbackContext<String> {
 
+    private String serverUrl;
 
-
-    private Button btnFattura;
-    private Button btnServer;
+    //private Button btnFattura;
+    //private Button btnServer;
     private LinearLayout progressLayout;
     private AppCompatImageView image;
+    private SlideToActView sta;
+    private View staContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +56,12 @@ public class MainActivity extends AppCompatActivity implements CallbackContext<S
 
         switch (item.getItemId()){
             case R.id.menuserver:
+
+                ServerDialogFragment frag = new ServerDialogFragment();
+                Bundle args = new Bundle();
+                args.putString(Constants.PREFERENCES_SERVER, getSharedPreferences(Constants.PREFERENCES, MODE_PRIVATE).getString(Constants.PREFERENCES_SERVER,""));
+                frag.setArguments(args);
+                frag.show(getSupportFragmentManager(), "Server");
 
                 break;
             case R.id.menulogout:
@@ -80,44 +90,53 @@ public class MainActivity extends AppCompatActivity implements CallbackContext<S
     }
 
     private void initInteface() {
-        btnFattura = ((Button) findViewById(R.id.btnFattura));
-        btnServer = ((Button) findViewById(R.id.btnServer));
+       // btnFattura = ((Button) findViewById(R.id.btnFattura));
+      //  btnServer = ((Button) findViewById(R.id.btnServer));
         progressLayout = ((LinearLayout) findViewById(R.id.progressLayout));
         image = ((AppCompatImageView) findViewById(R.id.image));
+        sta = (SlideToActView) findViewById(R.id.example);
+        staContainer = findViewById(R.id.sta_container);
 
+//        image.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startNewFatturaActivity();
+//            }
+//        });
+       // btnFattura.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startNewFatturaActivity();
+//            }
+//        });
 
-        image.setOnClickListener(new View.OnClickListener() {
+        sta.setOnSlideCompleteListener(new SlideToActView.OnSlideCompleteListener() {
             @Override
-            public void onClick(View view) {
+            public void onSlideComplete(SlideToActView slideToActView) {
                 startNewFatturaActivity();
-            }
-        });
-        btnFattura.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startNewFatturaActivity();
+                sta.resetSlider();
             }
         });
 
-        btnServer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+//        btnServer.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                ServerDialogFragment frag = new ServerDialogFragment();
+//
+//                Bundle args = new Bundle();
+//                args.putString(Constants.PREFERENCES_SERVER, getSharedPreferences(Constants.PREFERENCES, MODE_PRIVATE).getString(Constants.PREFERENCES_SERVER,""));
+//                frag.setArguments(args);
+//
+//
+//                frag.show(getSupportFragmentManager(), "Server");
+//
+//
+//            }
+//        });
 
-                ServerDialogFragment frag = new ServerDialogFragment();
 
-                Bundle args = new Bundle();
-                args.putString(Constants.PREFERENCES_SERVER, getSharedPreferences(Constants.PREFERENCES, MODE_PRIVATE).getString(Constants.PREFERENCES_SERVER,""));
-                frag.setArguments(args);
-
-
-                frag.show(getSupportFragmentManager(), "Server");
-
-
-            }
-        });
-
-
-        CheckServerStatus();
+       // CheckServerStatus();
 
         progressLayout.setVisibility(View.INVISIBLE);
 
@@ -144,16 +163,16 @@ public class MainActivity extends AppCompatActivity implements CallbackContext<S
         }
     }
 
-    private void CheckServerStatus() {
-        //devo verifcare se tra le shared resources cè quella relativa all'url delc server impostata
-        SharedPreferences prefs = getSharedPreferences(Constants.PREFERENCES, MODE_PRIVATE);
-        String server = prefs.getString(Constants.PREFERENCES_SERVER, "");
-        if (TextUtils.isEmpty(server)){
-            btnFattura.setEnabled(false);
-        }else{
-            btnFattura.setEnabled(true);
-        }
-    }
+//    private void CheckServerStatus() {
+//        //devo verifcare se tra le shared resources cè quella relativa all'url delc server impostata
+//        SharedPreferences prefs = getSharedPreferences(Constants.PREFERENCES, MODE_PRIVATE);
+//        String server = prefs.getString(Constants.PREFERENCES_SERVER, "");
+////        if (TextUtils.isEmpty(server)){
+////            btnFattura.setEnabled(false);
+////        }else{
+////            btnFattura.setEnabled(true);
+////        }
+//    }
 
 
     private void saveUrl(String serverUrl) {
@@ -166,8 +185,8 @@ public class MainActivity extends AppCompatActivity implements CallbackContext<S
     @Override
     public void onPreExecute() {
         progressLayout.setVisibility(View.VISIBLE);
-        btnFattura.setVisibility(View.GONE);
-        btnServer.setVisibility(View.GONE);
+        staContainer.setVisibility(View.GONE);
+       // btnServer.setVisibility(View.GONE);
         image.setVisibility(View.GONE);
     }
 
@@ -175,19 +194,33 @@ public class MainActivity extends AppCompatActivity implements CallbackContext<S
     public void onPostExecute(String s) {
 
         progressLayout.setVisibility(View.GONE);
-        btnFattura.setVisibility(View.VISIBLE);
-        btnServer.setVisibility(View.VISIBLE);
+        staContainer.setVisibility(View.VISIBLE);
+      //  btnServer.setVisibility(View.VISIBLE);
         image.setVisibility(View.VISIBLE);
 
-        saveUrl(s);
-        CheckServerStatus();
+        //se è una stringa vuota il risultato del ping allora
+        //il server ha risposto altrimenti cè un errore
+        if (TextUtils.isEmpty(s)){
+            sta.setLocked(false);
+            sta.setText("Nuova fattura");
+            Toast.makeText(this, "Server impostato correttamente",  Toast.LENGTH_SHORT).show();
+            saveUrl(serverUrl);
+        }else{
+            sta.setLocked(true);
+            sta.setText("Bloccato");
+            Toast.makeText(this, "Ping al server non riuscito: " + s,  Toast.LENGTH_LONG).show();
+            serverUrl = "";
+        }
+
+      //  CheckServerStatus();
 
     }
 
     @Override
     public void onDialogDismiss(String returnData, String dialogTag) {
+        serverUrl = returnData;
         if (TextUtils.isEmpty(returnData)){
-            CheckServerStatus();
+            //CheckServerStatus();
             return;
         }
 
