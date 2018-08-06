@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="it.noesis.erifornimento">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="it.noesis.erifornimento"> <!-- <uses-permission android:name="android.permission.VIBRATE"/> -->
+    <!-- <uses-permission android:name="android.permission.FLASHLIGHT"/> -->
+    <uses-sdk tools:overrideLibrary="com.budiyev.android.codescanner" />
 
     <uses-permission android:name="android.permission.CAMERA" />
-    <!-- <uses-permission android:name="android.permission.VIBRATE"/> -->
-    <!-- <uses-permission android:name="android.permission.FLASHLIGHT"/> -->
-
-
     <!-- <uses-feature -->
     <!-- android:name="android.hardware.camera" -->
     <!-- android:required="false" /> -->
@@ -16,8 +15,6 @@
     <uses-feature
         android:name="android.hardware.camera.autofocus"
         android:required="false" />
-
-
 
     <!-- <uses-feature -->
     <!-- android:name="android.hardware.camera.flash" -->
@@ -51,14 +48,17 @@
             android:label="@string/fatture"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".QrScannerActivity"
+            android:name=".ZxingNativeQrScannerActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".ClienteActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".FirstAccessActivity" />
-        <activity android:name=".Login2Activity"
-            android:label="@string/title_activity_login"></activity>
+        <activity
+            android:name=".Login2Activity"
+            android:label="@string/title_activity_login" />
+        <activity android:name=".BudievNativeQrScannerActivity" />
+        <activity android:name=".NisrulsNativeQrScannerActivity"></activity>
     </application>
 
 </manifest>

@@ -1,22 +1,14 @@
 package it.noesis.erifornimento;
 
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -24,8 +16,6 @@ import java.io.IOException;
 
 import it.noesis.erifornimento.model.Cliente;
 import it.noesis.erifornimento.utils.Constants;
-
-import static android.app.Activity.RESULT_OK;
 
 
 /**
@@ -37,8 +27,14 @@ import static android.app.Activity.RESULT_OK;
 public class NodataFragment extends Fragment {
 
     private static final int QR_SCANNER = 1;
+    private static final int QR_SCANNER1 = 2;
+    private static final int QR_SCANNER2 = 3;
+
+
     private OnFragmentInteractionListener mListener;
     private ImageView noDataImage;
+    private ImageView noDataImage1;
+    private ImageView noDataImage2;
     private ImageView edit;
 
 //    static final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
@@ -70,6 +66,8 @@ public class NodataFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         switch (requestCode){
             case QR_SCANNER:
+            case QR_SCANNER1:
+            case QR_SCANNER2:
                 if ( resultCode == Activity.RESULT_OK){
 
                     String result = intent.getExtras().get(Constants.DATA).toString();
@@ -96,6 +94,8 @@ public class NodataFragment extends Fragment {
                 }
 
                 break;
+
+
 
             case Constants.ACTIVITY_FOR_RESULT_CLIENTE:
                 if ( resultCode == Activity.RESULT_OK){
@@ -184,14 +184,39 @@ public class NodataFragment extends Fragment {
         View myFragmentView =  inflater.inflate(R.layout.fragment_nodata, container, false);
 
         noDataImage = ((ImageView) myFragmentView.findViewById(R.id.qrcode));
+        noDataImage1 = ((ImageView) myFragmentView.findViewById(R.id.qrcode1));
+        noDataImage2 = ((ImageView) myFragmentView.findViewById(R.id.qrcode2));
+
+
         edit = ((ImageView) myFragmentView.findViewById(R.id.edit));
         noDataImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i(NodataFragment.this.getClass().getName(), "clikkkooooo");
 
-                Intent a = new Intent(getActivity(), QrScannerActivity.class);
+                Intent a = new Intent(getActivity(), ZxingNativeQrScannerActivity.class);
                 startActivityForResult(a, QR_SCANNER);
+
+
+            }
+        });
+
+        noDataImage1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent a = new Intent(getActivity(), BudievNativeQrScannerActivity.class);
+                startActivityForResult(a, QR_SCANNER1);
+
+
+            }
+        });
+
+        noDataImage2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent a = new Intent(getActivity(), NisrulsNativeQrScannerActivity.class);
+                startActivityForResult(a, QR_SCANNER2);
 
 
             }

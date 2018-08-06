@@ -25,7 +25,7 @@ import it.noesis.erifornimento.utils.Constants;
 import static android.Manifest.permission.CAMERA;
 
 
-public class QrScannerActivity extends AppCompatActivity implements QRCodeReaderView.OnQRCodeReadListener{// implements ZXingScannerView.ResultHandler{
+public class ZxingNativeQrScannerActivity extends AppCompatActivity implements QRCodeReaderView.OnQRCodeReadListener{// implements ZXingScannerView.ResultHandler{
 
     public static final int REQUEST_CAMERA = 1;
     private QRCodeReaderView qrCodeReaderView;
@@ -73,13 +73,6 @@ public class QrScannerActivity extends AppCompatActivity implements QRCodeReader
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             if (evaluatePermission()){
 
-//                if (scannerView == null){
-//                    scannerView = new ZXingScannerView(this);
-//                    setContentView(scannerView);
-//                }
-//                scannerView.setResultHandler(this);
-//
-//                scannerView.startCamera();
                 qrCodeReaderView.startCamera();
 
 
