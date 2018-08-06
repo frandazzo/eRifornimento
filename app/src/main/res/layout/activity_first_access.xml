@@ -19,11 +19,13 @@
         android:id="@+id/btnServer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
         android:layout_marginEnd="@dimen/padding_end_button"
         android:layout_marginLeft="@dimen/padding_end_button"
         android:layout_marginRight="@dimen/padding_end_button"
         android:layout_marginStart="@dimen/padding_end_button"
+        android:layout_marginTop="30dp"
+        android:background="@color/colorPrimary"
+        android:textColor="#fff"
         android:text="@string/imposta_server" />
 
 
