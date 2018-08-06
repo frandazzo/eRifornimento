@@ -32,7 +32,7 @@
             android:layout_height="200dp"
             android:layout_margin="20dp"
             android:layout_weight="1"
-            app:srcCompat="@drawable/qrcode" />
+            app:srcCompat="@drawable/ic_qrcode" />
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/edit"
@@ -40,7 +40,7 @@
             android:layout_height="200dp"
             android:layout_margin="20dp"
             android:layout_weight="1"
-            app:srcCompat="@drawable/edit" />
+            app:srcCompat="@drawable/ic_edit" />
     </LinearLayout>
 
     <LinearLayout
@@ -54,7 +54,7 @@
             android:layout_height="200dp"
             android:layout_margin="20dp"
             android:layout_weight="1"
-            app:srcCompat="@drawable/qrcode" />
+            app:srcCompat="@drawable/ic_qrcode" />
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/qrcode2"
@@ -62,7 +62,7 @@
             android:layout_height="200dp"
             android:layout_margin="20dp"
             android:layout_weight="1"
-            app:srcCompat="@drawable/qrcode" />
+            app:srcCompat="@drawable/ic_qrcode" />
     </LinearLayout>
 
 

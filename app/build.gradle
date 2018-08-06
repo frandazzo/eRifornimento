@@ -11,6 +11,9 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
+
+
     }
     buildTypes {
         release {
@@ -27,6 +30,8 @@ dependencies {
     implementation('com.basgeekball:awesome-validation:4.1') {
         exclude group: 'com.android.support'
     }
+    implementation 'com.android.support:multidex:1.0.3'
+
     implementation 'com.budiyev.android:code-scanner:1.9.2'
     implementation 'com.ncorti:slidetoact:0.3.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
