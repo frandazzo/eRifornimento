@@ -200,15 +200,15 @@ public class MainActivity extends AppCompatActivity implements CallbackContext<S
 
         //se è una stringa vuota il risultato del ping allora
         //il server ha risposto altrimenti cè un errore
-        if (TextUtils.isEmpty(s)){
+        if ("ok".equals(s)){
             sta.setLocked(false);
             sta.setText("Nuova fattura");
-            Toast.makeText(this, "Server impostato correttamente",  Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "Server impostato correttamente",  Toast.LENGTH_SHORT).show();
             saveUrl(serverUrl);
         }else{
             sta.setLocked(true);
             sta.setText("Bloccato");
-            Toast.makeText(this, "Ping al server non riuscito: " + s,  Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, "Ping al server non riuscito: " + s,  Toast.LENGTH_LONG).show();
             serverUrl = "";
         }
 

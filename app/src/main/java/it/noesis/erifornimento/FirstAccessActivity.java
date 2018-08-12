@@ -90,36 +90,41 @@ public class FirstAccessActivity extends AppCompatActivity implements CallbackCo
     @Override
     public void onPostExecute(String s) {
 
-        progressLayout.setVisibility(View.GONE);
-        btnServer.setVisibility(View.VISIBLE);
-        image.setVisibility(View.VISIBLE);
+        try{
+            progressLayout.setVisibility(View.GONE);
+            btnServer.setVisibility(View.VISIBLE);
+            image.setVisibility(View.VISIBLE);
 
 
-        //se il risultato del ping è una stringa vuota allora
-        //vuol deire che ho pingato correttamenteil server
-        if (TextUtils.isEmpty(s)){
-            //qui posso andare all'activity di login
-            saveUrl(selectedServerUrl);
+            //se il risultato del ping è una stringa vuota allora
+            //vuol deire che ho pingato correttamenteil server
+            if ("ok".equals(s)){
+                //qui posso andare all'activity di login
+                saveUrl(selectedServerUrl);
 
 
-            //a questo punto devo decidere se andare lla schermata di login o alla main activity
-            //in base alla presenza di un token
-            String token = getUserToken();
-            if (TextUtils.isEmpty(token)){
-                Intent mainIntent = new Intent(this,Login2Activity.class);
+                //a questo punto devo decidere se andare lla schermata di login o alla main activity
+                //in base alla presenza di un token
+                String token = getUserToken();
+                if (TextUtils.isEmpty(token)){
+                    Intent mainIntent = new Intent(this,Login2Activity.class);
+                    startActivity(mainIntent);
+                    finish();
+                    return;
+                }
+
+                Intent mainIntent = new Intent(this,MainActivity.class);
                 startActivity(mainIntent);
                 finish();
                 return;
             }
 
-            Intent mainIntent = new Intent(this,MainActivity.class);
-            startActivity(mainIntent);
-            finish();
-            return;
+            //mostro un messaggio di errore
+            Toast.makeText(FirstAccessActivity.this, "Server irraggiungibile: " + s, Toast.LENGTH_LONG).show();
+        }catch (Exception ex){
+
         }
 
-        //mostro un messaggio di errore
-        Toast.makeText(this, "Server irraggiungibile: " + s, Toast.LENGTH_LONG).show();
     }
 
     private String getUserToken() {
