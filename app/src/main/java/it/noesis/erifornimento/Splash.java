@@ -63,7 +63,7 @@ public class Splash extends AppCompatActivity implements AsyncTaskCallbackContex
     public void onPostExecute(String result) {
         //se c'è un errore nella trasmissione dei dati redirigo alla first access activity
         //per fare reimpostare il server
-        if (!TextUtils.isEmpty(result)){
+        if (!"ok".equals(result)){
             Intent mainIntent = new Intent(Splash.this,FirstAccessActivity.class);
             Splash.this.startActivity(mainIntent);
             Splash.this.finish();

@@ -86,7 +86,9 @@ public class Login2Activity extends AppCompatActivity implements AsyncTaskCallba
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new LoginTask(this,email, password);
+            String serverUrl = getSharedPreferences(Constants.PREFERENCES, MODE_PRIVATE).getString(Constants.PREFERENCES_SERVER,"");
+            mAuthTask = new LoginTask(this,email, password, serverUrl);
+
             mAuthTask.execute((Void) null);
         }
     }

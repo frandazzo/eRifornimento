@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -57,6 +58,11 @@ public class FatturaActivity extends AppCompatActivity implements AsyncTaskCallb
 
     private Button sendFattura;
 
+    private String getUserToken() {
+        SharedPreferences prefs = getSharedPreferences(Constants.PREFERENCES, MODE_PRIVATE);
+        return prefs.getString(Constants.PREFERENCES_USER_TOKEN, "");
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,11 +83,13 @@ public class FatturaActivity extends AppCompatActivity implements AsyncTaskCallb
         fattura = initializeFatturaData(savedInstanceState);
         sendFattura = ((Button) findViewById(R.id.sendfattura));
 
+
+        final String serverUrl = getSharedPreferences(Constants.PREFERENCES, MODE_PRIVATE).getString(Constants.PREFERENCES_SERVER,"");
         sendFattura.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                new SendFatturaTask(FatturaActivity.this).execute(fattura);
+                new SendFatturaTask(FatturaActivity.this, getUserToken(), serverUrl).execute(fattura);
 
             }
         });
