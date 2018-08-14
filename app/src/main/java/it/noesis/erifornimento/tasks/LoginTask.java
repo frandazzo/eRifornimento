@@ -14,6 +14,7 @@ import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -76,6 +77,7 @@ public class LoginTask extends AsyncTask<Void, Void, LoginTaskResult> {
         // Create the urlConnection
         try {
             urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setConnectTimeout(3000);
             urlConnection.setRequestProperty("Content-Type", "application/json");
             urlConnection.setRequestMethod("POST");
             urlConnection.setDoInput(true);
@@ -131,16 +133,20 @@ public class LoginTask extends AsyncTask<Void, Void, LoginTaskResult> {
 
 
 
+        }catch (SocketTimeoutException exc){
 
+            LoginTaskResult res = new LoginTaskResult();
+            res.setError("Timeout opening connection: " + exc.getMessage());
+            return res;
 
         } catch (IOException e) {
             LoginTaskResult res = new LoginTaskResult();
             res.setError("Error in executing connection: " + e.getMessage());
-
             return res;
         } catch (JSONException e) {
             e.printStackTrace();
-        } finally {
+        }
+        finally {
             // Close Stream and disconnect HTTPS connection.
             if (stream != null) {
                 try {

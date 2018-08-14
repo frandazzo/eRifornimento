@@ -12,11 +12,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -30,11 +32,12 @@ import java.io.IOException;
 import it.noesis.erifornimento.model.Cliente;
 import it.noesis.erifornimento.model.Fattura;
 import it.noesis.erifornimento.tasks.AsyncTaskCallbackContext;
+import it.noesis.erifornimento.tasks.ClienteAsyncTaskCallbackContent;
 import it.noesis.erifornimento.tasks.SendFatturaTask;
 import it.noesis.erifornimento.utils.CallbackContext;
 import it.noesis.erifornimento.utils.Constants;
 
-public class FatturaActivity extends AppCompatActivity implements AsyncTaskCallbackContext<String> , CallbackContext<String>, NodataFragment.OnFragmentInteractionListener, ClienteFragment.OnClienteFragmentInteractionListener {
+public class FatturaActivity extends AppCompatActivity implements  AsyncTaskCallbackContext<String> , CallbackContext<String>, NodataFragment.OnFragmentInteractionListener, ClienteFragment.OnClienteFragmentInteractionListener {
 
     private ImageView benzina;
     private ImageView metano;
@@ -136,6 +139,18 @@ public class FatturaActivity extends AppCompatActivity implements AsyncTaskCallb
     private Fattura initializeFatturaData(Bundle savedInstanceState) {
         Fattura f = new Fattura();
 
+        //se l'attività main ha inviato un cliente lo inizializzo
+        if (getIntent().getExtras()!= null){
+            String clienteJson = getIntent().getExtras().getString(Constants.CLIENTE);
+            try {
+                f.setCliente(new ObjectMapper().readValue(clienteJson, Cliente.class));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+
         if (savedInstanceState == null)
             return f;
 
@@ -169,6 +184,7 @@ public class FatturaActivity extends AppCompatActivity implements AsyncTaskCallb
         gpl = ((ImageView) findViewById(R.id.gpl));
         diesel = ((ImageView) findViewById(R.id.diesel));
         metano = ((ImageView) findViewById(R.id.metano));
+
 
         totaleValue =((TextView) findViewById(R.id.totale_value));
 
@@ -319,10 +335,22 @@ public class FatturaActivity extends AppCompatActivity implements AsyncTaskCallb
     }
 
 
+
+
     @Override
     public void onDialogDismiss(String returnData, String dialogTag) {
             switch (dialogTag){
                 case  Constants.DIALOG_TARGA:
+
+
+                    //qui avvio un task asincrono per la verifica dell'esistenza
+                    //nel database di una targa e quindi dei dati del cliente associato
+
+
+
+
+
+
                     fattura.setTarga(returnData);
                     populateFieldTarga(returnData);
                     break;
@@ -446,32 +474,15 @@ public class FatturaActivity extends AppCompatActivity implements AsyncTaskCallb
         sendFattura.setEnabled(enableSendFatturaButton());
 
     }
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case android.R.id.home:
-//                // todo: goto back activity from here
-//
-//
-//                return true;
-//
-//            default:
-//                return super.onOptionsItemSelected(item);
-//        }
-//    }
 
     @Override
     public void onPreExecute() {
         progressLayout.setVisibility(View.VISIBLE);
         container.setVisibility(View.GONE);
 
-
-//        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-//
-//        params.gravity = Gravity.CENTER;
-//
-//        supercontainer.setLayoutParams(params);
     }
+
+
 
     @Override
     public void onPostExecute(String s) {
@@ -492,7 +503,7 @@ public class FatturaActivity extends AppCompatActivity implements AsyncTaskCallb
             return;
         }
 
-        Toast.makeText(this,"Errore: " + s, Toast.LENGTH_LONG);
+        Toast.makeText(FatturaActivity.this,s, Toast.LENGTH_LONG).show();
     }
 
 

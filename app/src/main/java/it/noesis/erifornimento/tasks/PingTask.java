@@ -11,6 +11,7 @@ import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.stream.Stream;
@@ -44,6 +45,7 @@ public class PingTask extends AsyncTask<String, Void, String> {
         // Create the urlConnection
         try {
             urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setConnectTimeout(3000);
             urlConnection.setRequestProperty("Content-Type", "application/json");
             urlConnection.setRequestMethod("GET");
             urlConnection.setRequestProperty("x-auth", "XXXXXXXXXXXXXx");
@@ -70,8 +72,8 @@ public class PingTask extends AsyncTask<String, Void, String> {
 
 
 
-
-
+        }catch (SocketTimeoutException exc){
+            return "Timeout opening connection: " + exc.getMessage();
         } catch (IOException e) {
             return "Error executing request: " + e.getMessage();
         }finally {

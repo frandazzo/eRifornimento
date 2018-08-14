@@ -1,14 +1,13 @@
 package it.noesis.erifornimento.tasks;
 
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -18,37 +17,36 @@ import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
 
 import it.noesis.erifornimento.model.Cliente;
-import it.noesis.erifornimento.model.Domicilio;
-import it.noesis.erifornimento.model.Fattura;
-import it.noesis.erifornimento.model.LoginTaskResult;
-import it.noesis.erifornimento.model.Sdi;
-import it.noesis.erifornimento.utils.Constants;
 
-public class SendFatturaTask extends AsyncTask<Fattura, Void, String> {
+public class FindClienteTask extends AsyncTask<Void, Void, Cliente> {
 
-    private AsyncTaskCallbackContext<String> context;
+    private ClienteAsyncTaskCallbackContent<Cliente> context;
     private final String userToken;
     private final String serverUrl;
+    private String query;
 
-    public SendFatturaTask(AsyncTaskCallbackContext<String> context , String userToken, String serverUrl){
+    public FindClienteTask(ClienteAsyncTaskCallbackContent<Cliente> context , String userToken, String serverUrl, String query){
         this.context = context;
         this.userToken = userToken;
         this.serverUrl = serverUrl;
+        this.query = query;
     }
 
 
 
-    @Override
-    protected String doInBackground(Fattura... fatturas) {
 
+    @Override
+    protected Cliente doInBackground(Void... voids) {
+       // String partitaIva = strings[0];
         URL url = null;
         HttpURLConnection urlConnection = null;
-        String result= null;
+        Cliente result= null;
         InputStream stream = null;
         try {
-            url = new URL(serverUrl + "/api/mobile/fatture");
+            url = new URL(serverUrl + "/api/mobile/clienti/" + query);
         } catch (MalformedURLException e) {
-            return e.getMessage();
+            e.printStackTrace();
+            return null;
         }
 
         // Create the urlConnection
@@ -56,52 +54,40 @@ public class SendFatturaTask extends AsyncTask<Fattura, Void, String> {
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setConnectTimeout(3000);
             urlConnection.setRequestProperty("Content-Type", "application/json");
-            urlConnection.setRequestMethod("POST");
+            urlConnection.setRequestMethod("GET");
             urlConnection.setRequestProperty("x-auth", userToken);
             urlConnection.setDoInput(true);
-            urlConnection.setDoOutput (true);
-        } catch (IOException e) {
-            return "Error in opening connection: " + e.getMessage();
+
+        } catch (Exception e) {
+            return null;
         }
 
 
         try {
             urlConnection.connect();
 
-//            Fattura f = new Fattura();
-//            Cliente c = new Cliente();
-//            f.setCliente(c);
-
-
-            String json = new ObjectMapper().writeValueAsString(fatturas[0]);
-            OutputStreamWriter out = new   OutputStreamWriter(urlConnection.getOutputStream());
-            out.write(json);
-            out.flush();
-            out.close();
-
-
-
             int responseCode = urlConnection.getResponseCode();
             if (responseCode != HttpsURLConnection.HTTP_OK) {
-                return "HTTP error code due to IO Exception: " + responseCode;
+                return null;
             }
             // Retrieve the response body as an InputStream.
             stream = urlConnection.getInputStream();
-
+            String stringResult = "";
             if (stream != null) {
                 // Converts Stream to String with max length of 500.
-                result = readStream(stream);
+                stringResult = readStream(stream);
+                result =  new ObjectMapper().readValue(stringResult, Cliente.class);
+                Log.d(this.getClass().getName(), "doInBackground: " + stringResult);
             }
-
 
 
 
         }catch (SocketTimeoutException exc){
-
-            return "Timeout opening connection: " + exc.getMessage();
-
-        } catch (IOException e) {
-            return "Error executing request: " + e.getMessage();
+            exc.printStackTrace();
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }finally {
             // Close Stream and disconnect HTTPS connection.
             if (stream != null) {
@@ -117,9 +103,6 @@ public class SendFatturaTask extends AsyncTask<Fattura, Void, String> {
         }
 
         return result;
-
-
-       // return "ok";
     }
 
     public String readStream(InputStream stream) throws IOException {
@@ -138,10 +121,9 @@ public class SendFatturaTask extends AsyncTask<Fattura, Void, String> {
         }
         return buffer.toString();
     }
-
     @Override
-    protected void onPostExecute(String s) {
-        context.onPostExecute(s);
+    protected void onPostExecute(Cliente cliente) {
+        context.onPostExecuteClienteTask(cliente);
     }
 
     @Override

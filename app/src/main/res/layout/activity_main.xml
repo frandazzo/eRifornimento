@@ -15,6 +15,50 @@
         android:id="@+id/image"
         android:layout_marginBottom="20dp"/>
 
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="20dp"
+        android:id="@+id/question"
+
+        >
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Inserisci partita iva"
+            android:textAllCaps="true"
+            android:maxLines="1"
+            android:inputType="text"
+            app:backgroundTint="@color/colorPrimaryDark"
+            />
+
+        <!--<EditText-->
+            <!--android:id="@+id/text"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:hint="Inserisci partita iva"-->
+            <!--android:inputType="text"-->
+            <!--android:singleLine="true"-->
+            <!--android:textCursorDrawable="@color/colorPrimaryDark"-->
+
+           <!--/>-->
+
+        <Button
+            android:id="@+id/btn_clear"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@android:drawable/btn_dialog"
+            android:visibility="gone" />
+    </FrameLayout>
+
     <!--<android.support.v7.widget.AppCompatButton-->
         <!--android:id="@+id/btnFattura"-->
         <!--android:layout_width="match_parent"-->
@@ -81,7 +125,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:paddingTop="20dp"
-            android:text="Sto verificando il server"
+            android:text="Sto verificando i dati sul server"
             android:textSize="18sp" />
 
 
