@@ -143,7 +143,9 @@ public class FatturaActivity extends AppCompatActivity implements  AsyncTaskCall
         if (getIntent().getExtras()!= null){
             String clienteJson = getIntent().getExtras().getString(Constants.CLIENTE);
             try {
-                f.setCliente(new ObjectMapper().readValue(clienteJson, Cliente.class));
+                Cliente c = new ObjectMapper().readValue(clienteJson, Cliente.class);
+                f.setCliente(c);
+                f.setTarga(c.getTarga());
             } catch (IOException e) {
                 e.printStackTrace();
             }

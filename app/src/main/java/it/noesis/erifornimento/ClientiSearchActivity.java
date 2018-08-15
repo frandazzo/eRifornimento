@@ -2,6 +2,7 @@ package it.noesis.erifornimento;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -28,6 +29,8 @@ public class ClientiSearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clienti_search);
 
+        this.setTitle("Ricerca clienti");
+
         mRecyclerView = (RecyclerView) findViewById(R.id.lista);
 
         // use this setting to improve performance if you know that changes
@@ -37,6 +40,8 @@ public class ClientiSearchActivity extends AppCompatActivity {
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(this,
+                DividerItemDecoration.VERTICAL));
 
         //in input alla activity ci devono essere una lista di clienti
         //precedentemente cercata

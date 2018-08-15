@@ -207,18 +207,38 @@ public class MainActivity extends AppCompatActivity implements ClienteAsyncTaskC
         startActivityForResult(i, 1);
     }
 
+    private void startNewFatturaActivity(String clienteJson) {
+        Intent i = new Intent(MainActivity.this, FatturaActivity.class);
+
+        if (!TextUtils.isEmpty(clienteJson)) {
+
+            i.putExtra(Constants.CLIENTE, clienteJson);
+
+        }
+
+        startActivityForResult(i, 1);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (data == null)
             return;
 
-        if (requestCode == 1){
+        if (requestCode == 1){ //invio fattura
 
             if (resultCode == RESULT_OK){
                 String result = data.getExtras().getString("data");
                 Toast.makeText(this,"Invio effettuato con successo: " + result, Toast.LENGTH_LONG).show();
             }
 
+        }else if (requestCode == 2){ //ricerca clienti
+            if (resultCode == RESULT_OK && data != null){
+                String result = data.getExtras().getString(Constants.CLIENTE);
+                //qui  reindirizzo allactivity della fattura
+                startNewFatturaActivity(result);
+            }else {
+                editText.setText("");
+            }
         }
     }
 
@@ -249,8 +269,32 @@ public class MainActivity extends AppCompatActivity implements ClienteAsyncTaskC
     @Override
     public void onPostExecuteClientiTask(List<Cliente> clientes) {
         hideprogress();
-        startNewFatturaActivity();
+        startRicercaClientiActivity(clientes);
         sta.resetSlider();
+
+
+    }
+
+    private void startRicercaClientiActivity(List<Cliente> clientes) {
+
+
+        if (clientes != null && clientes.size() > 0) {
+            startRicercaClienti(clientes);
+        }else{
+            startNewFatturaActivity();
+        }
+
+
+    }
+
+    private void startRicercaClienti(List<Cliente> clientes) {
+        Intent i = new Intent(MainActivity.this, ClientiSearchActivity.class);
+        try {
+            i.putExtra(Constants.CLIENTI_SEARCH, new ObjectMapper().writeValueAsString(clientes));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        startActivityForResult(i, 2);
     }
 
     @Override
@@ -258,6 +302,7 @@ public class MainActivity extends AppCompatActivity implements ClienteAsyncTaskC
         hideprogress();
         startNewFatturaActivity(cliente);
         sta.resetSlider();
+        editText.setText("");
     }
 
     private void ShowProogress() {

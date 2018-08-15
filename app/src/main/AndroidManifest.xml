@@ -60,7 +60,8 @@
             android:label="@string/title_activity_login" />
         <activity android:name=".BudievNativeQrScannerActivity" />
         <activity android:name=".NisrulsNativeQrScannerActivity" />
-        <activity android:name=".ClientiSearchActivity"></activity>
+        <activity android:name=".ClientiSearchActivity"
+            android:parentActivityName=".MainActivity"></activity>
     </application>
 
 </manifest>

@@ -1,6 +1,8 @@
 package it.noesis.erifornimento.adapters;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,10 +11,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.util.List;
 
 import it.noesis.erifornimento.R;
 import it.noesis.erifornimento.model.Cliente;
+import it.noesis.erifornimento.utils.Constants;
 
 public class ClientiAdapter extends RecyclerView.Adapter<ClientiAdapter.ViewHolder> {
 
@@ -60,10 +66,21 @@ public class ClientiAdapter extends RecyclerView.Adapter<ClientiAdapter.ViewHold
         viewHolder.cliente = clienti.get(i);
         viewHolder.mTextViewAzi.setText(clienti.get(i).getAnag().getDenom());
         viewHolder.mTextViewPiva.setText(clienti.get(i).getAnag().getPiva());
-        viewHolder.mTextViewTarga.setText(clienti.get(i).getAnag().getCf());
+        viewHolder.mTextViewTarga.setText(clienti.get(i).getTarga());
         viewHolder.mLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Intent i = new Intent();
+                try {
+                    i.putExtra(Constants.CLIENTE, new ObjectMapper().writeValueAsString(viewHolder.cliente));
+                } catch (JsonProcessingException e) {
+                    i.putExtra(Constants.CLIENTE, "");
+                }
+                ((Activity)(viewHolder.context)).setResult(Activity.RESULT_OK, i);
+                ((Activity)(viewHolder.context)).finish();
+
+
                 Toast.makeText(viewHolder.context, "Click on :" + viewHolder.mTextViewAzi.getText().toString(), Toast.LENGTH_SHORT).show();
             }
         });
