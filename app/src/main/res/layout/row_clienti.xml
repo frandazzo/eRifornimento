@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    >
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/azi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="@string/azienda"
+        android:textSize="21sp"
+        android:textStyle="bold" />
+
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/piva"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@id/targa"
+        android:layout_below="@id/azi"
+        android:text="01337380776"
+        android:layout_marginLeft="20dp"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@id/targa"
+        android:layout_marginStart="20dp" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/targa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/azi"
+        android:layout_marginRight="20dp"
+        android:text="AK660AZ"
+        android:textStyle="bold"
+        android:layout_marginEnd="20dp" />
+
+</RelativeLayout>

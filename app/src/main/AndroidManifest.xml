@@ -59,7 +59,8 @@
             android:name=".Login2Activity"
             android:label="@string/title_activity_login" />
         <activity android:name=".BudievNativeQrScannerActivity" />
-        <activity android:name=".NisrulsNativeQrScannerActivity"></activity>
+        <activity android:name=".NisrulsNativeQrScannerActivity" />
+        <activity android:name=".ClientiSearchActivity"></activity>
     </application>
 
 </manifest>

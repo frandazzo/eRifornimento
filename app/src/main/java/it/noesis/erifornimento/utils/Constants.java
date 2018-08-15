@@ -20,4 +20,5 @@ public class Constants {
     public static final String CLIENTE = "cliente";
     public static final String PREFERENCES_USER_TOKEN = "token";
     public static final String LOGGED_USERNAME = "userlogged";
+    public static String CLIENTI_SEARCH = "clienti_search";
 }

@@ -2,6 +2,7 @@ package it.noesis.erifornimento.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
@@ -11,6 +12,17 @@ public class Cliente {
     private Anagrafica anag = new Anagrafica();
     private Sdi sdi = new Sdi();
     private Date dtGenQr;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String targa;
+
+    public String getTarga() {
+        return targa;
+    }
+
+    public void setTarga(String targa) {
+        this.targa = targa;
+    }
 
     public Cliente(){
 
