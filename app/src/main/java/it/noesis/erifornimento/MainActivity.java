@@ -271,6 +271,7 @@ public class MainActivity extends AppCompatActivity implements ClienteAsyncTaskC
         hideprogress();
         startRicercaClientiActivity(clientes);
         sta.resetSlider();
+        editText.setText("");
 
 
     }

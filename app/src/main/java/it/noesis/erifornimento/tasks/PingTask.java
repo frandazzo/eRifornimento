@@ -48,7 +48,7 @@ public class PingTask extends AsyncTask<String, Void, String> {
             urlConnection.setConnectTimeout(3000);
             urlConnection.setRequestProperty("Content-Type", "application/json");
             urlConnection.setRequestMethod("GET");
-            urlConnection.setRequestProperty("x-auth", "XXXXXXXXXXXXXx");
+            //urlConnection.setRequestProperty("x-auth", "XXXXXXXXXXXXXx");
             urlConnection.setDoInput(true);
         } catch (IOException e) {
             return "Error in opening connection: " + e.getMessage();
@@ -92,7 +92,15 @@ public class PingTask extends AsyncTask<String, Void, String> {
 
         return result;
 
-
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//
+//
+//
+//        return "ok";
 
     }
 

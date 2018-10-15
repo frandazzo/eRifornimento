@@ -30,7 +30,7 @@
             android:id="@+id/text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Inserisci partita iva"
+            android:hint="Azienda, partita iva o targa"
             android:textAllCaps="true"
             android:maxLines="1"
             android:inputType="text"

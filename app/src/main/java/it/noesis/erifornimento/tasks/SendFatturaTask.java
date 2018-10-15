@@ -57,7 +57,7 @@ public class SendFatturaTask extends AsyncTask<Fattura, Void, String> {
             urlConnection.setConnectTimeout(3000);
             urlConnection.setRequestProperty("Content-Type", "application/json");
             urlConnection.setRequestMethod("POST");
-            urlConnection.setRequestProperty("x-auth", userToken);
+              urlConnection.setRequestProperty("Authorization", "Bearer " + userToken);
             urlConnection.setDoInput(true);
             urlConnection.setDoOutput (true);
         } catch (IOException e) {
@@ -68,9 +68,7 @@ public class SendFatturaTask extends AsyncTask<Fattura, Void, String> {
         try {
             urlConnection.connect();
 
-//            Fattura f = new Fattura();
-//            Cliente c = new Cliente();
-//            f.setCliente(c);
+
 
 
             String json = new ObjectMapper().writeValueAsString(fatturas[0]);
@@ -119,7 +117,15 @@ public class SendFatturaTask extends AsyncTask<Fattura, Void, String> {
         return result;
 
 
-       // return "ok";
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//
+//
+//
+//        return "ok";
     }
 
     public String readStream(InputStream stream) throws IOException {

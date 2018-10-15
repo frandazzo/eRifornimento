@@ -48,13 +48,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/targa"
-                    android:textSize="18sp"
-                    android:textColor="#000"/>
+                    android:textColor="#000"
+                    android:textSize="24sp" />
+
                 <TextView
+                    android:id="@+id/targa_value"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/notarga"
-                    android:id="@+id/targa_value"/>
+                    android:textSize="20sp" />
 
             </LinearLayout>
 
@@ -120,19 +122,20 @@
             android:padding="20dp"
             android:id="@+id/totale">
 
-            <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/totale"
-            android:textSize="22sp"
-            android:textColor="#000"/>
-            <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/euro"
-            android:id="@+id/totale_value"
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/totale"
+                    android:textColor="#000"
+                    android:textSize="32sp" />
 
-            />
+                <TextView
+                    android:id="@+id/totale_value"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/euro"
+
+                    android:textSize="32sp" />
 
             </LinearLayout>
 

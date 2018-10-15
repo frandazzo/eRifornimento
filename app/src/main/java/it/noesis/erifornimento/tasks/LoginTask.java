@@ -122,8 +122,8 @@ public class LoginTask extends AsyncTask<Void, Void, LoginTaskResult> {
                 r.setError(mainObject.getString("error"));
                 r.setUser(new User());
                 if (TextUtils.isEmpty(r.getError())){
-
-                    r.getUser().setToken(mainObject.getString("token"));
+                    String token = urlConnection.getHeaderField("Authorization");
+                    r.getUser().setToken(token);
                     r.getUser().setUsername(mainObject.getString("role"));
                     r.getUser().setName(mainObject.getString("name"));
 
@@ -159,23 +159,30 @@ public class LoginTask extends AsyncTask<Void, Void, LoginTaskResult> {
                 urlConnection.disconnect();
             }
         }
+        return r;
 
-
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//
+//
 //        LoginTaskResult loginTaskResult = new LoginTaskResult();
-//        if ("ciccillo".equals(username) && "password".equals(password)){
+//        if ("ciccillo".equals(this.credentials.getUsername()) && "password".equals(this.credentials.getPassword())){
 //
 //            loginTaskResult.setUser(new User());
 //            loginTaskResult.getUser().setToken("xxxxxxxxxxx");
-//            loginTaskResult.getUser().setName("Ciccio");
-//            loginTaskResult.getUser().setUsername("ciccillo");
+//            loginTaskResult.getUser().setName("Giovanni");
+//            loginTaskResult.getUser().setUsername("Barone");
 //
 //        }else{
 //            loginTaskResult.setError("Username o password errati");
 //        }
-
-
+//
+//
 //        return loginTaskResult;
-        return r;
+
     }
 
     public String readStream(InputStream stream) throws IOException {
