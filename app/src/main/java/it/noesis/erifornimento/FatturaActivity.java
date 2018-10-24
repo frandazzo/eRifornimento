@@ -59,7 +59,8 @@ public class FatturaActivity extends AppCompatActivity implements  AsyncTaskCall
 
     private Fattura fattura;
 
-    private Button sendFattura;
+    private ImageView pagaContanti;
+    private ImageView pagaCard;
 
     private String getUserToken() {
         SharedPreferences prefs = getSharedPreferences(Constants.PREFERENCES, MODE_PRIVATE);
@@ -84,11 +85,14 @@ public class FatturaActivity extends AppCompatActivity implements  AsyncTaskCall
 
         //inizializo l'istanza che conterrà i valori selezionati dall'utente
         fattura = initializeFatturaData(savedInstanceState);
-        sendFattura = ((Button) findViewById(R.id.sendfattura));
+
+        pagaContanti = ((ImageView) findViewById(R.id.pagacontanti));
+        pagaCard = ((ImageView) findViewById(R.id.pagacard));
 
 
         final String serverUrl = getSharedPreferences(Constants.PREFERENCES, MODE_PRIVATE).getString(Constants.PREFERENCES_SERVER,"");
-        sendFattura.setOnClickListener(new View.OnClickListener() {
+
+        pagaContanti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -96,17 +100,40 @@ public class FatturaActivity extends AppCompatActivity implements  AsyncTaskCall
 
             }
         });
+        pagaCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                new SendFatturaTask(FatturaActivity.this, getUserToken(), serverUrl).execute(fattura);
+
+            }
+        });
+
         //inizializzo tutti i componeneti dell'interfaccia
         initInterface();
-
-        sendFattura.setEnabled(enableSendFatturaButton());
+        enableSendFatturaButtons();
     }
 
 
-    private boolean enableSendFatturaButton(){
+    private boolean checkFatturaState(){
         if (fattura == null)
             return false;
         return fattura.isValid();
+    }
+    private void setSendFatturaButtonsImages() {
+        if (pagaContanti.isEnabled() && pagaCard.isEnabled()) {
+            pagaContanti.setImageResource(R.drawable.ic_contanti);
+            pagaCard.setImageResource(R.drawable.ic_card);
+        }
+        else {
+            pagaContanti.setImageResource(R.drawable.ic_contanti_disabled);
+            pagaCard.setImageResource(R.drawable.ic_card_disabled);
+        }
+    }
+    private void enableSendFatturaButtons(){
+        pagaCard.setEnabled(checkFatturaState());
+        pagaContanti.setEnabled(checkFatturaState());
+        setSendFatturaButtonsImages();
     }
 
 
@@ -426,7 +453,8 @@ public class FatturaActivity extends AppCompatActivity implements  AsyncTaskCall
                     break;
             }
 
-        sendFattura.setEnabled(enableSendFatturaButton());
+//        sendFattura.setEnabled(enableSendFatturaButton());
+        enableSendFatturaButtons();
 
 
     }
@@ -445,7 +473,9 @@ public class FatturaActivity extends AppCompatActivity implements  AsyncTaskCall
         NodataFragment noData = new NodataFragment();
 
         f.beginTransaction().replace(R.id.fragment_place, noData).commit();
-        sendFattura.setEnabled(enableSendFatturaButton());
+//        sendFattura.setEnabled(enableSendFatturaButton());
+        enableSendFatturaButtons();
+
     }
 
     @Override
@@ -473,8 +503,8 @@ public class FatturaActivity extends AppCompatActivity implements  AsyncTaskCall
         f.beginTransaction().replace(R.id.fragment_place, frag).commit();
 
 
-        sendFattura.setEnabled(enableSendFatturaButton());
-
+//        sendFattura.setEnabled(enableSendFatturaButton());
+        enableSendFatturaButtons();
     }
 
     @Override

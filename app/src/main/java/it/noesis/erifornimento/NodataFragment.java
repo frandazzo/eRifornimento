@@ -183,33 +183,12 @@ public class NodataFragment extends Fragment {
         // Inflate the layout for this fragment
         View myFragmentView =  inflater.inflate(R.layout.fragment_nodata, container, false);
 
-        noDataImage = ((ImageView) myFragmentView.findViewById(R.id.qrcode));
-        noDataImage1 = ((ImageView) myFragmentView.findViewById(R.id.qrcode1));
+
         noDataImage2 = ((ImageView) myFragmentView.findViewById(R.id.qrcode2));
 
 
         edit = ((ImageView) myFragmentView.findViewById(R.id.edit));
-        noDataImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                Intent a = new Intent(getActivity(), ZxingNativeQrScannerActivity.class);
-                startActivityForResult(a, QR_SCANNER);
-
-
-            }
-        });
-
-        noDataImage1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent a = new Intent(getActivity(), BudievNativeQrScannerActivity.class);
-                startActivityForResult(a, QR_SCANNER1);
-
-
-            }
-        });
 
         noDataImage2.setOnClickListener(new View.OnClickListener() {
             @Override
