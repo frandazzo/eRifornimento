@@ -12,6 +12,18 @@ public class Fattura {
     private Double gpl;
     private Double metano;
     private Cliente cliente;
+    //0 = contanti, 1 cartas credito
+    private Integer tipoPagamento = 0;
+
+    public Integer getTipoPagamento() {
+        return tipoPagamento;
+    }
+
+    public void setTipoPagamento(Integer tipoPagamento) {
+        if (tipoPagamento != 0 && tipoPagamento != 1)
+            tipoPagamento = 0;
+        this.tipoPagamento = tipoPagamento;
+    }
 
     public Fattura(){
         benzina = 0d;

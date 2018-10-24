@@ -95,7 +95,7 @@ public class FatturaActivity extends AppCompatActivity implements  AsyncTaskCall
         pagaContanti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                fattura.setTipoPagamento(0);
                 new SendFatturaTask(FatturaActivity.this, getUserToken(), serverUrl).execute(fattura);
 
             }
@@ -103,7 +103,7 @@ public class FatturaActivity extends AppCompatActivity implements  AsyncTaskCall
         pagaCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                fattura.setTipoPagamento(1);
                 new SendFatturaTask(FatturaActivity.this, getUserToken(), serverUrl).execute(fattura);
 
             }
