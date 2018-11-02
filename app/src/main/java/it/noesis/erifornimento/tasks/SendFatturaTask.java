@@ -116,7 +116,7 @@ public class SendFatturaTask extends AsyncTask<Fattura, Void, String> {
 
         return result;
 
-
+//
 //        try {
 //            Thread.sleep(1000);
 //        } catch (InterruptedException e) {

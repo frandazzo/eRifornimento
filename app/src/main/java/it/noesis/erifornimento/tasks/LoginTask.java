@@ -169,7 +169,7 @@ public class LoginTask extends AsyncTask<Void, Void, LoginTaskResult> {
 //
 //
 //        LoginTaskResult loginTaskResult = new LoginTaskResult();
-//        if ("ciccillo".equals(this.credentials.getUsername()) && "password".equals(this.credentials.getPassword())){
+//        if ("giovanni".equals(this.credentials.getUsername()) && "giovanni".equals(this.credentials.getPassword())){
 //
 //            loginTaskResult.setUser(new User());
 //            loginTaskResult.getUser().setToken("xxxxxxxxxxx");

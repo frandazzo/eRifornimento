@@ -114,7 +114,7 @@ public class FindClienteTask extends AsyncTask<Void, Void, Cliente> {
 //            e.printStackTrace();
 //        }
 //
-//        if (this.query.equals("01337380776")){
+//        if (this.query.equals("05105480726")){
 //            Cliente c = new Cliente();
 //            c.setAnag(new Anagrafica());
 //            c.setSdi(new Sdi());
@@ -122,19 +122,19 @@ public class FindClienteTask extends AsyncTask<Void, Void, Cliente> {
 //            c.setDtGenQr(new Date());
 //
 //            c.getAnag().setNaz("IT");
-//            c.getAnag().setCf("01337380776");
-//            c.getAnag().setDenom("Noesis");
+//            c.getAnag().setCf("05105480726");
+//            c.getAnag().setDenom("Infosist");
 //            c.getAnag().setDomFisc(new Domicilio());
 //            c.getAnag().getDomFisc().setProv("MT");
 //            c.getAnag().getDomFisc().setCap("75100");
 //            c.getAnag().getDomFisc().setCom("Matera");
 //            c.getAnag().getDomFisc().setInd("Via gravina 39");
 //            c.getAnag().getDomFisc().setNaz("ITALIA");
-//            c.getAnag().setPiva("01337370776");
+//            c.getAnag().setPiva("05105480726");
 //
 //
 //            c.getSdi().setCod("66557788");
-//            c.getSdi().setPec("noesis_srl@pec.it");
+//            c.getSdi().setPec("infosist@pec.it");
 //
 //            return c;
 //        }
